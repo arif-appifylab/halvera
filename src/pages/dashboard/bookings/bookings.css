@@ -1,0 +1,99 @@
+/* Student dashboard → Bookings: calendar and list. Prefix: bkd- (the booking page uses bk-). Builds on ap-* and tk-*.
+   Tokens only, logical properties only. */
+
+.bkd-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.bkd-allowance { margin: 0; padding: var(--space-3) var(--space-4); border-radius: var(--radius-md); background: var(--surface-sage); color: var(--primary-ink); }
+.bkd-allowance a { color: inherit; font-weight: var(--body-strong-font-weight); }
+
+/* The calendar at full width, then the chosen day's bookings. */
+.bkd-split { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+.bkd-day { display: grid; gap: var(--space-4); align-content: start; }
+.bkd-day h2 { margin: 0; }
+
+.bkd-cal { display: grid; gap: var(--space-4); }
+.bkd-cal-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+.bkd-cal-head h2 { margin: 0; }
+.bkd-cal-grid { display: grid; gap: 4px; }
+.bkd-cal-row { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
+.bkd-cal-wd { padding-block-end: var(--space-1); color: var(--ink-muted); font-size: var(--caption-font-size); font-weight: 700; text-align: center; }
+
+.bkd-cal-cell {
+  position: relative;
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-inline-size: 0;
+  min-block-size: 104px;
+  padding: var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  color: var(--ink);
+  cursor: pointer;
+}
+.bkd-cal-cell.is-empty { border-color: transparent; background: transparent; cursor: default; }
+.bkd-cal-cell:hover { background: var(--surface-sunken); }
+.bkd-cal-cell.is-past { background: var(--surface); }
+.bkd-cal-cell.is-past .bkd-cal-day { color: var(--ink-muted); }
+.bkd-cal-cell.is-selected { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.bkd-cal-day {
+  justify-self: start;
+  min-inline-size: 24px;
+  block-size: 24px;
+  padding: 0 4px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--body-sm-font-size);
+  font-weight: var(--body-strong-font-weight);
+  line-height: 24px;
+  cursor: pointer;
+}
+.bkd-cal-day:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.bkd-cal-cell.is-today .bkd-cal-day { background: var(--primary); color: var(--on-primary); }
+.bkd-cal-items { display: grid; gap: 3px; min-inline-size: 0; }
+.bkd-cal-item {
+  display: block;
+  inline-size: 100%;
+  border: 0;
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  overflow: hidden;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 16px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.bkd-cal-item.is-appointment { background: var(--primary-soft); color: var(--primary-ink); }
+.bkd-cal-item.is-event { background: var(--accent-soft); color: var(--accent-ink); }
+.bkd-cal-item.is-done { opacity: 1; background: var(--surface-sunken); color: var(--ink-muted); }
+.bkd-cal-item.is-cancelled { text-decoration: line-through; }
+.bkd-cal-item:hover { filter: brightness(0.95); text-decoration: underline; }
+.bkd-cal-item:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.bkd-cal-time { font-weight: 700; }
+.bkd-cal-more { justify-self: start; padding: 0; border: 0; background: none; color: var(--primary); font: inherit; font-size: 12px; line-height: 16px; font-weight: 600; cursor: pointer; }
+.bkd-cal-dots { display: none; gap: 3px; }
+.bkd-cal-dots i, .bkd-cal-legend i { display: inline-block; inline-size: 8px; block-size: 8px; border-radius: 50%; }
+.bkd-cal-dots .is-appointment, .bkd-cal-legend .is-appointment { background: var(--primary); }
+.bkd-cal-dots .is-event, .bkd-cal-legend .is-event { background: var(--accent); }
+.bkd-cal-legend { display: flex; gap: var(--space-4); margin: 0; }
+.bkd-cal-legend span { display: inline-flex; align-items: center; gap: var(--space-2); }
+
+/* Phones: numbers and dots only. */
+@media (max-width: 720px) {
+  .bkd-cal-cell { min-block-size: 52px; justify-items: center; padding: var(--space-1); }
+  .bkd-cal-day { justify-self: center; }
+  .bkd-cal-items { display: none; }
+  .bkd-cal-dots { display: flex; }
+}
+@media (max-width: 720px) { .bkd-split > .sg-card { padding: var(--space-3); } }
+
+/* The booking opened from the calendar: the list view's card, inside a dialog. */
+.bkd-detail .ap-appt, .bkd-detail .tk-ticket { border: 0; padding: 0; box-shadow: none; background: transparent; grid-template-columns: auto minmax(0, 1fr); }
+/* Clicking a day scrolls here; leave room for the sticky header. */
+#bkd-day-title { scroll-margin-block-start: calc(var(--header-height) + var(--space-4)); }

@@ -1,0 +1,51 @@
+/* Whiter light modes for Midnight & gold, for the client to choose (see src/app/light-version.js). Light
+   mode only; dark mode is unchanged. Only the grounds, tints and lines change: navy, gold and every text
+   colour stay, and each pair was checked for 4.5:1 on every ground here (navy, gold, grey, status). */
+
+/* 1. Pure white */
+:root[data-palette="midnight"][data-theme="light"][data-light="1"] {
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f5f6f8;
+  --surface-sage: #f3f5f9;
+  --surface-clay: #fbf5ea;
+  --line: #e6e8ee;
+  --primary-soft: #e9eef7;
+  --accent-soft: #f8eedb;
+}
+
+/* 2. Porcelain */
+:root[data-palette="midnight"][data-theme="light"][data-light="2"] {
+  --surface: #f9fafc;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f0f2f6;
+  --surface-sage: #ebeff6;
+  --surface-clay: #f8f1e3;
+  --line: #e0e4ec;
+  --primary-soft: #e3e9f4;
+  --accent-soft: #f6ebd3;
+}
+
+/* 3. Ivory */
+:root[data-palette="midnight"][data-theme="light"][data-light="3"] {
+  --surface: #fdfcf8;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f5f2ea;
+  --surface-sage: #f5efe1;
+  --surface-clay: #f2ecdf;
+  --line: #e8e4d9;
+  --primary-soft: #e8ecf4;
+  --accent-soft: #f3e6c9;
+}
+
+/* 4. Mist */
+:root[data-palette="midnight"][data-theme="light"][data-light="4"] {
+  --surface: #fafafa;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f2f2f4;
+  --surface-sage: #eef0f3;
+  --surface-clay: #f7f2e8;
+  --line: #e4e5e9;
+  --primary-soft: #e6eaf2;
+  --accent-soft: #f5ebd6;
+}

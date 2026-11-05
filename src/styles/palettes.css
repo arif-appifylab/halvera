@@ -1,0 +1,608 @@
+/* Alternative colour palettes for the client to choose from (see /palettes).
+   Each one overrides every colour token in tokens.json, light and dark; names and roles are unchanged.
+   Sage (tokens.css) stays the default: no data-palette attribute.
+   palette.js sets data-palette on <html>. Specificity: :root[data-palette] (0,2,0) beats
+   :root / [data-theme="light"] / [data-theme="dark"] (0,1,0); the dark block (0,3,0) beats the light one.
+   Contrast checked (WCAG 2.x): text pairs 4.5:1, line-strong and focus 3:1. Edit values, then re-check. */
+
+/* Clay & linen: Terracotta for action on warm linen, with olive as the quiet second colour. Earthy and grounded. */
+:root[data-palette="clay"] {
+  color-scheme: light;
+  --surface: #f8f3ec;
+  --surface-raised: #ffffff;
+  --surface-sunken: #efe6da;
+  --surface-sage: #f4e2d7;
+  --surface-clay: #e7e8d4;
+  --surface-inverse: #2b211c;
+  --ink: #2b211c;
+  --ink-muted: #62554d;
+  --ink-subtle: #73665e;
+  --ink-inverse: #f6efe6;
+  --ink-inverse-muted: #c9bbb0;
+  --line: #e6dbcd;
+  --line-strong: #8c7d70;
+  --primary: #9c4529;
+  --primary-hover: #82381f;
+  --on-primary: #ffffff;
+  --primary-soft: #f3ddd2;
+  --primary-ink: #77331a;
+  --accent: #566228;
+  --accent-hover: #47511f;
+  --on-accent: #ffffff;
+  --accent-soft: #e7e8d4;
+  --accent-ink: #454f1d;
+  --honey: #c48a2c;
+  --success: #2d6a4f;
+  --success-soft: #d9ecdf;
+  --warning: #8a5300;
+  --warning-soft: #fbecd0;
+  --danger: #a3203f;
+  --on-danger: #ffffff;
+  --danger-soft: #f8dde3;
+  --info: #2c5f86;
+  --info-soft: #dde9f3;
+  --focus: #2c5f86;
+  --overlay: rgba(30, 22, 18, 0.48);
+  --shadow-sm: 0 1px 2px rgba(43, 33, 28, 0.06);
+  --shadow-md: 0 6px 20px -6px rgba(43, 33, 28, 0.14);
+  --shadow-lg: 0 24px 48px -16px rgba(43, 33, 28, 0.22);
+}
+
+:root[data-palette="clay"][data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #1a1512;
+  --surface-raised: #231c18;
+  --surface-sunken: #120e0c;
+  --surface-sage: #33221a;
+  --surface-clay: #252716;
+  --surface-inverse: #efe7dd;
+  --ink: #f3ece4;
+  --ink-muted: #bba99d;
+  --ink-subtle: #9e8e82;
+  --ink-inverse: #211a16;
+  --ink-inverse-muted: #5a4d45;
+  --line: #362c26;
+  --line-strong: #7f6f64;
+  --primary: #e99c7a;
+  --primary-hover: #f2b597;
+  --on-primary: #2a1208;
+  --primary-soft: #3d261c;
+  --primary-ink: #f4c6af;
+  --accent: #bac47c;
+  --accent-hover: #cbd391;
+  --on-accent: #1d2208;
+  --accent-soft: #2c3019;
+  --accent-ink: #d4db9f;
+  --honey: #d9ab52;
+  --success: #7fcaa0;
+  --success-soft: #173326;
+  --warning: #f0b75c;
+  --warning-soft: #36280f;
+  --danger: #ff94a8;
+  --on-danger: #2b0610;
+  --danger-soft: #3d1520;
+  --info: #8ec3ea;
+  --info-soft: #162a3a;
+  --focus: #9fd0f5;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px -6px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+}
+
+/* Plum & blush: Muted plum for action on a soft blush ground, with sage as the gentle second colour. Tender and restful. */
+:root[data-palette="plum"] {
+  color-scheme: light;
+  --surface: #faf4f2;
+  --surface-raised: #ffffff;
+  --surface-sunken: #f2e8e5;
+  --surface-sage: #f0e3ea;
+  --surface-clay: #e3eae0;
+  --surface-inverse: #2a1f28;
+  --ink: #2a1f28;
+  --ink-muted: #625560;
+  --ink-subtle: #73656f;
+  --ink-inverse: #f6eff2;
+  --ink-inverse-muted: #c8b9c3;
+  --line: #eadcd9;
+  --line-strong: #8f7e86;
+  --primary: #6b3a5e;
+  --primary-hover: #572f4c;
+  --on-primary: #ffffff;
+  --primary-soft: #eedde8;
+  --primary-ink: #57294a;
+  --accent: #4b6750;
+  --accent-hover: #3c5441;
+  --on-accent: #ffffff;
+  --accent-soft: #e1e9df;
+  --accent-ink: #38513d;
+  --honey: #c9932f;
+  --success: #2d6a4f;
+  --success-soft: #d9ecdf;
+  --warning: #8a5300;
+  --warning-soft: #fbecd0;
+  --danger: #b0302a;
+  --on-danger: #ffffff;
+  --danger-soft: #f8dedb;
+  --info: #2c5f86;
+  --info-soft: #dde9f3;
+  --focus: #2c5f86;
+  --overlay: rgba(30, 20, 28, 0.48);
+  --shadow-sm: 0 1px 2px rgba(42, 31, 40, 0.06);
+  --shadow-md: 0 6px 20px -6px rgba(42, 31, 40, 0.14);
+  --shadow-lg: 0 24px 48px -16px rgba(42, 31, 40, 0.22);
+}
+
+:root[data-palette="plum"][data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #18131a;
+  --surface-raised: #211a23;
+  --surface-sunken: #110d12;
+  --surface-sage: #2d1f2b;
+  --surface-clay: #1d271f;
+  --surface-inverse: #ece6ea;
+  --ink: #f2ecf0;
+  --ink-muted: #b7a8b3;
+  --ink-subtle: #9a8b96;
+  --ink-inverse: #1f1820;
+  --ink-inverse-muted: #544752;
+  --line: #332a33;
+  --line-strong: #7c6d79;
+  --primary: #d8a8ca;
+  --primary-hover: #e5bfda;
+  --on-primary: #2a1024;
+  --primary-soft: #3a2536;
+  --primary-ink: #edcae1;
+  --accent: #9ec3a1;
+  --accent-hover: #b5d4b7;
+  --on-accent: #11200f;
+  --accent-soft: #213025;
+  --accent-ink: #c0dcc2;
+  --honey: #d9ab52;
+  --success: #7fcaa0;
+  --success-soft: #173326;
+  --warning: #f0b75c;
+  --warning-soft: #36280f;
+  --danger: #ff9a8f;
+  --on-danger: #2b0906;
+  --danger-soft: #3a1714;
+  --info: #8ec3ea;
+  --info-soft: #162a3a;
+  --focus: #9fd0f5;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px -6px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+}
+
+/* Tide & sand: Deep sea-teal for action on warm sand, with ochre for warmth. Clear, steady and open. */
+:root[data-palette="tide"] {
+  color-scheme: light;
+  --surface: #f7f3ec;
+  --surface-raised: #ffffff;
+  --surface-sunken: #ede6da;
+  --surface-sage: #dfeaec;
+  --surface-clay: #f3e7cf;
+  --surface-inverse: #15292f;
+  --ink: #172a30;
+  --ink-muted: #4f5f63;
+  --ink-subtle: #637175;
+  --ink-inverse: #f1eee7;
+  --ink-inverse-muted: #b3c2c5;
+  --line: #e2dbcd;
+  --line-strong: #807b70;
+  --primary: #1d5866;
+  --primary-hover: #164651;
+  --on-primary: #ffffff;
+  --primary-soft: #d7e7ea;
+  --primary-ink: #164651;
+  --accent: #875a13;
+  --accent-hover: #704a0f;
+  --on-accent: #ffffff;
+  --accent-soft: #f3e7cf;
+  --accent-ink: #6a470d;
+  --honey: #c9932f;
+  --success: #2d6a4f;
+  --success-soft: #d9ecdf;
+  --warning: #9c4709;
+  --warning-soft: #fbe6d4;
+  --danger: #b0302a;
+  --on-danger: #ffffff;
+  --danger-soft: #f8dedb;
+  --info: #2f5a8c;
+  --info-soft: #dfe7f4;
+  --focus: #2f5a8c;
+  --overlay: rgba(14, 26, 30, 0.48);
+  --shadow-sm: 0 1px 2px rgba(23, 42, 48, 0.06);
+  --shadow-md: 0 6px 20px -6px rgba(23, 42, 48, 0.14);
+  --shadow-lg: 0 24px 48px -16px rgba(23, 42, 48, 0.22);
+}
+
+:root[data-palette="tide"][data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #10191c;
+  --surface-raised: #172226;
+  --surface-sunken: #0b1214;
+  --surface-sage: #172d33;
+  --surface-clay: #2b2414;
+  --surface-inverse: #e6ecec;
+  --ink: #ecf1f0;
+  --ink-muted: #a5b5b8;
+  --ink-subtle: #8a9a9d;
+  --ink-inverse: #132226;
+  --ink-inverse-muted: #47585c;
+  --line: #263439;
+  --line-strong: #6a7d82;
+  --primary: #84c4d2;
+  --primary-hover: #a2d4df;
+  --on-primary: #0b1f24;
+  --primary-soft: #1d3a42;
+  --primary-ink: #b3dde6;
+  --accent: #e0b465;
+  --accent-hover: #ebc684;
+  --on-accent: #241904;
+  --accent-soft: #352a14;
+  --accent-ink: #efd197;
+  --honey: #d9ab52;
+  --success: #7fcaa0;
+  --success-soft: #173326;
+  --warning: #f5a66a;
+  --warning-soft: #3a230f;
+  --danger: #ff9a8f;
+  --on-danger: #2b0906;
+  --danger-soft: #3a1714;
+  --info: #9cb8ee;
+  --info-soft: #18243a;
+  --focus: #9fd0f5;
+  --overlay: rgba(0, 0, 0, 0.6);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 6px 20px -6px rgba(0, 0, 0, 0.55);
+  --shadow-lg: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+}
+
+/* Evergreen: A deeper forest green on soft cream, with terracotta warmth. In dark mode: charcoal, not green, with a clear bright green for action. */
+
+:root[data-palette="evergreen"] {
+  color-scheme: light;
+  --surface: #f7f6f2;
+  --surface-raised: #ffffff;
+  --surface-sunken: #eeece6;
+  --surface-sage: #e3ece5;
+  --surface-clay: #f4e5da;
+  --surface-inverse: #17201b;
+  --ink: #17201b;
+  --ink-muted: #4f5a53;
+  --ink-subtle: #5f6962;
+  --ink-inverse: #f4f2ec;
+  --ink-inverse-muted: #b8c2bb;
+  --line: #e3e1da;
+  --line-strong: #7f857f;
+  --primary: #1f5c45;
+  --primary-hover: #174836;
+  --on-primary: #ffffff;
+  --primary-soft: #d8e8de;
+  --primary-ink: #174836;
+  --accent: #a84a22;
+  --accent-hover: #8c3d1b;
+  --on-accent: #ffffff;
+  --accent-soft: #f6e1d4;
+  --accent-ink: #843a19;
+  --honey: #c48a2c;
+  --success: #23673f;
+  --success-soft: #dcefe2;
+  --warning: #8a5300;
+  --warning-soft: #fbecd0;
+  --danger: #b42318;
+  --on-danger: #ffffff;
+  --danger-soft: #fbe0dc;
+  --info: #2c5f86;
+  --info-soft: #dde9f3;
+  --focus: #2c5f86;
+  --overlay: rgba(23, 32, 27, 0.48);
+  --shadow-sm: 0 1px 2px rgba(23, 32, 27, 0.06);
+  --shadow-md: 0 6px 20px -6px rgba(23, 32, 27, 0.14);
+  --shadow-lg: 0 24px 48px -16px rgba(23, 32, 27, 0.22);
+}
+
+:root[data-palette="evergreen"][data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #121413;
+  --surface-raised: #1b1e1c;
+  --surface-sunken: #0c0e0d;
+  --surface-sage: #182620;
+  --surface-clay: #2a1f1a;
+  --surface-inverse: #ecefec;
+  --ink: #eef0ed;
+  --ink-muted: #a9b0ab;
+  --ink-subtle: #8f9791;
+  --ink-inverse: #161917;
+  --ink-inverse-muted: #4a524c;
+  --line: #2a2e2c;
+  --line-strong: #6e7670;
+  --primary: #5cc08f;
+  --primary-hover: #7dd1a8;
+  --on-primary: #06170e;
+  --primary-soft: #173326;
+  --primary-ink: #9fe0bf;
+  --accent: #f0a37a;
+  --accent-hover: #f5b996;
+  --on-accent: #2a1206;
+  --accent-soft: #3a2418;
+  --accent-ink: #f6c2a4;
+  --honey: #e0b25c;
+  --success: #6fd09a;
+  --success-soft: #133022;
+  --warning: #f0b75c;
+  --warning-soft: #36280f;
+  --danger: #ff8a80;
+  --on-danger: #2a0805;
+  --danger-soft: #3a1714;
+  --info: #8cc2ef;
+  --info-soft: #13283a;
+  --focus: #8cc2ef;
+  --overlay: rgba(0, 0, 0, 0.64);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+}
+
+
+/* Midnight & gold: Navy and ivory by day; at night, deep navy with warm gold for action. Calm, premium and easy on the eyes after dark. */
+
+:root[data-palette="midnight"] {
+  color-scheme: light;
+  --surface: #f8f6f1;
+  --surface-raised: #ffffff;
+  --surface-sunken: #efece4;
+  --surface-sage: #e5e9f2;
+  --surface-clay: #f4ead6;
+  --surface-inverse: #141b2d;
+  --ink: #151c2e;
+  --ink-muted: #4c5468;
+  --ink-subtle: #5c6477;
+  --ink-inverse: #f3f1ea;
+  --ink-inverse-muted: #b6bccb;
+  --line: #e4e1d8;
+  --line-strong: #81869a;
+  --primary: #1f3a6b;
+  --primary-hover: #172d55;
+  --on-primary: #ffffff;
+  --primary-soft: #dfe6f3;
+  --primary-ink: #172d55;
+  --accent: #8a5e10;
+  --accent-hover: #734e0d;
+  --on-accent: #ffffff;
+  --accent-soft: #f4e8cf;
+  --accent-ink: #6e4c0b;
+  --honey: #c48a2c;
+  --success: #23673f;
+  --success-soft: #dcefe2;
+  --warning: #8a5300;
+  --warning-soft: #fbecd0;
+  --danger: #b42318;
+  --on-danger: #ffffff;
+  --danger-soft: #fbe0dc;
+  --info: #2c5f86;
+  --info-soft: #dde9f3;
+  --focus: #2c5f86;
+  --overlay: rgba(21, 28, 46, 0.48);
+  --shadow-sm: 0 1px 2px rgba(21, 28, 46, 0.06);
+  --shadow-md: 0 6px 20px -6px rgba(21, 28, 46, 0.14);
+  --shadow-lg: 0 24px 48px -16px rgba(21, 28, 46, 0.22);
+}
+
+:root[data-palette="midnight"][data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #0e1320;
+  --surface-raised: #161c2c;
+  --surface-sunken: #0a0e18;
+  --surface-sage: #18213a;
+  --surface-clay: #2a2414;
+  --surface-inverse: #eef0f5;
+  --ink: #eef1f7;
+  --ink-muted: #a8b0c4;
+  --ink-subtle: #8d95aa;
+  --ink-inverse: #141a28;
+  --ink-inverse-muted: #4b5366;
+  --line: #252c3e;
+  --line-strong: #6c7489;
+  --primary: #e7b95c;
+  --primary-hover: #f0c97a;
+  --on-primary: #1d1404;
+  --primary-soft: #33290f;
+  --primary-ink: #f3d38f;
+  --accent: #8fb4ff;
+  --accent-hover: #a9c5ff;
+  --on-accent: #0a1430;
+  --accent-soft: #1b2847;
+  --accent-ink: #b8cfff;
+  --honey: #e7b95c;
+  --success: #6fd09a;
+  --success-soft: #10291d;
+  --warning: #f0b75c;
+  --warning-soft: #33270e;
+  --danger: #ff8a80;
+  --on-danger: #2a0805;
+  --danger-soft: #3a1714;
+  --info: #8fb4ff;
+  --info-soft: #16243f;
+  --focus: #8fb4ff;
+  --overlay: rgba(0, 0, 0, 0.64);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+}
+
+
+/* Stone & moss: Quiet neutrals with a moss green and a soft rust. Almost colourless, so photos and content lead. Dark mode is true neutral grey. */
+
+:root[data-palette="stone"] {
+  color-scheme: light;
+  --surface: #f6f5f3;
+  --surface-raised: #ffffff;
+  --surface-sunken: #ecebe8;
+  --surface-sage: #e7ebe3;
+  --surface-clay: #f0e7e0;
+  --surface-inverse: #1c1c1a;
+  --ink: #1c1c1a;
+  --ink-muted: #55554f;
+  --ink-subtle: #65655e;
+  --ink-inverse: #f5f4f1;
+  --ink-inverse-muted: #bdbcb6;
+  --line: #e2e1dd;
+  --line-strong: #82817a;
+  --primary: #3d5c38;
+  --primary-hover: #304a2c;
+  --on-primary: #ffffff;
+  --primary-soft: #dfe8db;
+  --primary-ink: #304a2c;
+  --accent: #8a4f3a;
+  --accent-hover: #723f2e;
+  --on-accent: #ffffff;
+  --accent-soft: #f1e2db;
+  --accent-ink: #6b3a29;
+  --honey: #c48a2c;
+  --success: #23673f;
+  --success-soft: #dcefe2;
+  --warning: #8a5300;
+  --warning-soft: #fbecd0;
+  --danger: #b42318;
+  --on-danger: #ffffff;
+  --danger-soft: #fbe0dc;
+  --info: #2c5f86;
+  --info-soft: #dde9f3;
+  --focus: #2c5f86;
+  --overlay: rgba(28, 28, 26, 0.48);
+  --shadow-sm: 0 1px 2px rgba(28, 28, 26, 0.06);
+  --shadow-md: 0 6px 20px -6px rgba(28, 28, 26, 0.14);
+  --shadow-lg: 0 24px 48px -16px rgba(28, 28, 26, 0.22);
+}
+
+:root[data-palette="stone"][data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #141414;
+  --surface-raised: #1e1e1d;
+  --surface-sunken: #0e0e0e;
+  --surface-sage: #1c231b;
+  --surface-clay: #271f1b;
+  --surface-inverse: #efefec;
+  --ink: #efefec;
+  --ink-muted: #ababa5;
+  --ink-subtle: #91918b;
+  --ink-inverse: #181817;
+  --ink-inverse-muted: #4f4f4a;
+  --line: #2c2c2a;
+  --line-strong: #72726c;
+  --primary: #a8cf98;
+  --primary-hover: #bddbaf;
+  --on-primary: #142010;
+  --primary-soft: #232d20;
+  --primary-ink: #c8e3bd;
+  --accent: #e3a78f;
+  --accent-hover: #ebbaa6;
+  --on-accent: #2a130a;
+  --accent-soft: #35231c;
+  --accent-ink: #efc4b3;
+  --honey: #e0b25c;
+  --success: #7fd0a0;
+  --success-soft: #14291c;
+  --warning: #f0b75c;
+  --warning-soft: #33270e;
+  --danger: #ff8a80;
+  --on-danger: #2a0805;
+  --danger-soft: #3a1714;
+  --info: #9cc8ee;
+  --info-soft: #16263a;
+  --focus: #9cc8ee;
+  --overlay: rgba(0, 0, 0, 0.64);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+}
+
+
+/* Ocean & coral: Fresh teal with a coral accent on a cool, airy ground. In dark mode: deep blue-green with bright teal, lively but soft. */
+
+:root[data-palette="ocean"] {
+  color-scheme: light;
+  --surface: #f5f8f8;
+  --surface-raised: #ffffff;
+  --surface-sunken: #e9f0f0;
+  --surface-sage: #dcecee;
+  --surface-clay: #fbe7e1;
+  --surface-inverse: #0f2a30;
+  --ink: #102a30;
+  --ink-muted: #45606a;
+  --ink-subtle: #566f78;
+  --ink-inverse: #eef6f6;
+  --ink-inverse-muted: #aec3c7;
+  --line: #dce6e7;
+  --line-strong: #7a8d92;
+  --primary: #0e6371;
+  --primary-hover: #0b505c;
+  --on-primary: #ffffff;
+  --primary-soft: #d4ebef;
+  --primary-ink: #0b4f5c;
+  --accent: #b0402b;
+  --accent-hover: #963623;
+  --on-accent: #ffffff;
+  --accent-soft: #f8e0d9;
+  --accent-ink: #8a311f;
+  --honey: #c48a2c;
+  --success: #23673f;
+  --success-soft: #dcefe2;
+  --warning: #8a5300;
+  --warning-soft: #fbecd0;
+  --danger: #b42318;
+  --on-danger: #ffffff;
+  --danger-soft: #fbe0dc;
+  --info: #2c5f86;
+  --info-soft: #dde9f3;
+  --focus: #2c5f86;
+  --overlay: rgba(16, 42, 48, 0.48);
+  --shadow-sm: 0 1px 2px rgba(16, 42, 48, 0.06);
+  --shadow-md: 0 6px 20px -6px rgba(16, 42, 48, 0.14);
+  --shadow-lg: 0 24px 48px -16px rgba(16, 42, 48, 0.22);
+}
+
+:root[data-palette="ocean"][data-theme="dark"] {
+  color-scheme: dark;
+  --surface: #0d1719;
+  --surface-raised: #142124;
+  --surface-sunken: #091113;
+  --surface-sage: #12292d;
+  --surface-clay: #2c1a16;
+  --surface-inverse: #e9f2f3;
+  --ink: #e9f2f3;
+  --ink-muted: #a3b6ba;
+  --ink-subtle: #889ca1;
+  --ink-inverse: #0f1c1f;
+  --ink-inverse-muted: #445a5f;
+  --line: #213236;
+  --line-strong: #667b80;
+  --primary: #5fd0e0;
+  --primary-hover: #85dce8;
+  --on-primary: #04191d;
+  --primary-soft: #13353b;
+  --primary-ink: #9fe4ee;
+  --accent: #ff9b82;
+  --accent-hover: #ffb29e;
+  --on-accent: #2c0c04;
+  --accent-soft: #3b201a;
+  --accent-ink: #ffbfaf;
+  --honey: #e0b25c;
+  --success: #6fd09a;
+  --success-soft: #10291d;
+  --warning: #f0b75c;
+  --warning-soft: #33270e;
+  --danger: #ff8a80;
+  --on-danger: #2a0805;
+  --danger-soft: #3a1714;
+  --info: #8fc4ef;
+  --info-soft: #14283a;
+  --focus: #8fc4ef;
+  --overlay: rgba(0, 0, 0, 0.64);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 8px 24px -8px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 24px 48px -16px rgba(0, 0, 0, 0.7);
+}

@@ -1,0 +1,99 @@
+/* Student dashboard → Profile, and its printed record. Prefix: pf-. Tokens only, logical properties only. */
+
+.pf-goals { display: grid; gap: var(--space-3); margin: 0; padding: 0; border: 0; min-inline-size: 0; }
+.pf-goals legend { padding: 0; margin-block-end: var(--space-2); }
+.pf-goal-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 180px), 1fr)); gap: var(--space-2) var(--space-4); }
+
+.pf-readonly { display: grid; gap: var(--space-3); margin: 0; padding-block-start: var(--space-4); border-block-start: 1px solid var(--line); }
+.pf-readonly > div { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: var(--space-3); }
+.pf-readonly dt { color: var(--ink-muted); font-size: var(--body-sm-font-size); }
+.pf-readonly dd { margin: 0; }
+.pf-readonly a { margin-inline-start: var(--space-2); font-size: var(--body-sm-font-size); }
+@media (max-width: 640px) { .pf-readonly > div { grid-template-columns: minmax(0, 1fr); gap: var(--space-1); } }
+
+/* Quiz and assignment results: one row each, score on the end. */
+.pf-results { display: grid; }
+.pf-results > li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: var(--space-4);
+  padding-block: var(--space-4);
+}
+.pf-results > li + li { border-block-start: 1px solid var(--line); }
+.pf-results > li:first-child { padding-block-start: 0; }
+.pf-results > li:last-child { padding-block-end: 0; }
+.pf-result-main { display: grid; gap: var(--space-1); min-inline-size: 0; }
+.pf-result-main a { color: var(--ink); text-decoration: none; }
+.pf-result-main a:hover { color: var(--primary); text-decoration: underline; }
+.pf-score { margin: 0; font-family: var(--font-display); font-size: var(--heading-3-font-size); line-height: var(--heading-3-line-height); }
+
+.pf-parts { display: grid; gap: var(--space-3); margin: 0; padding: 0; border: 0; }
+
+/* The printed record: hidden on screen, the only thing on the page while printing. It uses fixed
+   ink on white (not theme tokens) so a page open in dark mode still prints on plain paper. */
+.pf-print-root { display: none; }
+
+@media print {
+  html.pf-printing body > *:not(.pf-print-root) { display: none !important; }
+  html.pf-printing .pf-print-root { display: block; }
+  html.pf-printing, html.pf-printing body { background: #fff; color: #1f2a24; }
+}
+
+.pf-doc { font-family: var(--font-body); font-size: 11pt; line-height: 1.45; color: #1f2a24; }
+.pf-doc h1 { margin: 4pt 0; font-family: var(--font-display); font-size: 22pt; font-weight: 500; }
+.pf-doc h2 { margin: 16pt 0 6pt; font-family: var(--font-display); font-size: 13pt; font-weight: 500; }
+.pf-doc p { margin: 0 0 6pt; }
+.pf-doc-head { padding-block-end: 10pt; border-block-end: 1.5pt solid #1f3a6b; }
+.pf-doc-school { display: flex; align-items: center; gap: 6pt; color: #1f3a6b; font-weight: 700; }
+.pf-doc-dl { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6pt 16pt; margin: 0; }
+.pf-doc-dl dt { color: #56615a; font-size: 9pt; }
+.pf-doc-dl dd { margin: 0; }
+.pf-doc table { inline-size: 100%; border-collapse: collapse; font-size: 9.5pt; }
+.pf-doc th, .pf-doc td { padding: 4pt 6pt; border-block-end: 0.5pt solid #d8d2c6; text-align: start; vertical-align: top; }
+.pf-doc th { color: #56615a; font-weight: 700; }
+.pf-doc tr { break-inside: avoid; }
+.pf-doc section { break-inside: avoid-page; }
+.pf-doc-foot { margin-block-start: 18pt; padding-block-start: 8pt; border-block-start: 0.5pt solid #d8d2c6; color: #56615a; font-size: 8.5pt; }
+
+/* Achievements: the level card beside "How to earn points" (same height), then the nine badges in
+   one row, then the leaderboard. Badge colours come from the set's data (--b1, --b2). */
+.pf-ach { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: var(--space-5); align-items: stretch; }
+@media (max-width: 900px) { .pf-ach { grid-template-columns: minmax(0, 1fr); } }
+.pf-level { display: flex; align-items: center; gap: var(--space-5); }
+.pf-level-main { display: grid; gap: var(--space-2); flex: 1; min-inline-size: 0; }
+.pf-level-main p { margin: 0; }
+.pf-earn { display: grid; align-content: start; gap: var(--space-3); }
+.pf-earn p { margin: 0; }
+.pf-earn ul { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; font-size: var(--body-sm-font-size); }
+.pf-earn li { display: flex; justify-content: space-between; gap: var(--space-3); }
+
+.pf-badge-art {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: var(--size);
+  block-size: var(--size);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, var(--b1), var(--b2));
+  overflow: hidden;
+}
+.pf-badge-art img { inline-size: 100%; block-size: 100%; object-fit: contain; }
+.pf-badge-art.is-locked { filter: grayscale(1); opacity: 0.45; }
+.pf-badge-fallback { color: #fff; font-weight: 700; font-size: calc(var(--size) * 0.4); }
+
+.pf-badges { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+@media (max-width: 1100px) { .pf-badges { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .pf-badges { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+.pf-badges li { display: grid; justify-items: center; gap: var(--space-1); padding: var(--space-3) var(--space-1); border-radius: var(--radius-md); text-align: center; }
+.pf-badges li:not(.is-locked) { background: var(--surface-sage); }
+.pf-badge-name { font-size: var(--body-sm-font-size); font-weight: var(--body-strong-font-weight); }
+.pf-badges li.is-locked .pf-badge-name { color: var(--ink-muted); }
+.pf-badge-meta { font-size: var(--caption-font-size); line-height: var(--caption-line-height); color: var(--ink-muted); }
+
+.pf-board { inline-size: 100%; border-collapse: collapse; font-size: var(--body-sm-font-size); }
+.pf-board th { padding: var(--space-2) var(--space-3); color: var(--ink-muted); font-weight: 600; text-align: start; border-block-end: 1px solid var(--line); }
+.pf-board td { padding: var(--space-2) var(--space-3); border-block-end: 1px solid var(--line); }
+.pf-board .pf-num { text-align: end; }
+.pf-board tr.is-you td { background: var(--surface-sage); font-weight: var(--body-strong-font-weight); }
+.pf-board-badge { display: inline-flex; align-items: center; gap: var(--space-2); }

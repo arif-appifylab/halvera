@@ -1,0 +1,122 @@
+/* Dashboard Appointments, Payments and Settings. Prefix: ap-. Tokens and logical properties only. */
+
+.ap-page { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); min-inline-size: 0; }
+
+/* Shared bits */
+.ap-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ap-rule { display: flex; align-items: flex-start; gap: var(--space-2); }
+.ap-rule .sg-icon { flex: none; margin-block-start: 2px; }
+.ap-nowrap { white-space: nowrap; }
+.ap-fieldset { border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+.ap-fieldset legend { padding: 0; margin-block-end: var(--space-1); }
+.ap-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.ap-saved { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--success); min-block-size: var(--body-sm-line-height); }
+
+/* Appointments */
+.ap-allowance { display: grid; gap: var(--space-3); }
+
+.ap-appt { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-5); align-items: start; }
+.ap-date {
+  display: grid; justify-items: center; align-content: center; gap: 2px;
+  min-inline-size: 64px; padding: var(--space-3) var(--space-2);
+  border-radius: var(--radius-md); background: var(--surface-sage); color: var(--primary-ink);
+}
+.ap-date-weekday, .ap-date-month { font-size: var(--caption-font-size); line-height: var(--caption-line-height); font-weight: var(--caption-font-weight); }
+.ap-date-day { font-family: var(--font-display); font-size: var(--heading-2-font-size); line-height: var(--heading-2-line-height); }
+.ap-appt-body { display: grid; gap: var(--space-3); min-inline-size: 0; }
+.ap-appt-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-3); }
+.ap-meta { display: grid; gap: var(--space-2); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.ap-meta li { display: flex; align-items: center; gap: var(--space-2); }
+.ap-meta .sg-icon { flex: none; color: var(--ink-muted); }
+
+.ap-list ul { display: grid; }
+.ap-list-row {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3);
+  padding: var(--space-4);
+}
+.ap-list-row + .ap-list-row { border-block-start: 1px solid var(--line); }
+.ap-list-main { display: grid; gap: var(--space-1); min-inline-size: 0; }
+.ap-list-end { display: flex; align-items: center; gap: var(--space-3); }
+
+/* Payments */
+.ap-cell-note { display: block; font-size: var(--caption-font-size); line-height: var(--caption-line-height); color: var(--ink-muted); }
+.ap-invoice { display: inline-flex; align-items: center; gap: var(--space-1); white-space: nowrap; color: var(--primary); font-weight: var(--body-strong-font-weight); }
+
+.ap-sub { display: grid; gap: var(--space-4); }
+.ap-sub-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
+.ap-sub-ended {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3);
+  padding: var(--space-4); border-radius: var(--radius-md); background: var(--warning-soft);
+}
+
+.ap-offers { display: grid; gap: var(--space-3); }
+.ap-offer {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3);
+  padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-raised);
+}
+.ap-offer > div { display: grid; gap: var(--space-1); flex: 1 1 260px; }
+
+.ap-method, .ap-device { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.ap-method-icon {
+  display: inline-grid; place-items: center; flex: none; inline-size: 44px; block-size: 44px;
+  border-radius: var(--radius-md); background: var(--surface-sunken); color: var(--primary);
+}
+.ap-method-text { display: grid; gap: var(--space-1); flex: 1 1 220px; min-inline-size: 0; }
+
+.ap-skel-row { display: flex; align-items: center; gap: var(--space-5); padding-block: var(--space-2); }
+
+/* Settings */
+.ap-email-status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.ap-switch-list { display: grid; }
+.ap-switch-list .sg-switch-row + .sg-switch-row { border-block-start: 1px solid var(--line); }
+.ap-switches { display: grid; gap: var(--space-2); }
+.ap-unsub { padding-inline: var(--space-1); }
+.ap-steps { list-style: decimal; padding-inline-start: var(--space-5); display: grid; gap: var(--space-2); }
+.ap-devices { display: grid; }
+.ap-device { padding-block: var(--space-3); }
+.ap-device + .ap-device { border-block-start: 1px solid var(--line); }
+
+.ap-danger {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4);
+  border-color: var(--danger);
+}
+.ap-danger-text { display: grid; gap: var(--space-1); flex: 1 1 280px; }
+
+@media (max-width: 640px) {
+  .ap-appt { grid-template-columns: 1fr; }
+  .ap-date { grid-auto-flow: column; justify-content: start; gap: var(--space-2); min-inline-size: 0; padding: var(--space-2) var(--space-3); }
+  .ap-date-day { font-size: var(--heading-4-font-size); line-height: var(--heading-4-line-height); }
+  .ap-two { grid-template-columns: 1fr; }
+  .ap-list-end { inline-size: 100%; justify-content: space-between; }
+}
+
+/* Appointments: the member's included appointments, under the allowance. */
+.ap-included { display: grid; gap: var(--space-2); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.ap-included a { color: var(--primary); font-weight: var(--body-strong-font-weight); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Payments → order details and proof of payment */
+.ap-order { inline-size: 100%; border-collapse: collapse; }
+.ap-order td { padding-block: var(--space-2); border-block-end: 1px solid var(--line); vertical-align: top; }
+.ap-order-amt { text-align: end; white-space: nowrap; padding-inline-start: var(--space-4); }
+.ap-order-total td { font-weight: var(--body-strong-font-weight); border-block-end: 0; }
+.ap-file { display: grid; gap: var(--space-1); }
+.ap-file input { font: inherit; font-size: var(--body-sm-font-size); }
+
+/* Settings → Notifications: a row per notification, switches for email and in-app. */
+.ap-notif { display: grid; gap: var(--space-3); }
+.ap-notif-head, .ap-notif-list > li { display: grid; grid-template-columns: minmax(0, 1fr) 72px 72px; align-items: center; gap: var(--space-3); }
+.ap-notif-head h2, .ap-notif-head p, .ap-notif-list p { margin: 0; }
+.ap-notif-col { justify-self: center; color: var(--ink-muted); font-size: var(--caption-font-size); font-weight: 700; }
+.ap-notif-list { display: grid; }
+.ap-notif-list > li { padding-block: var(--space-3); border-block-start: 1px solid var(--line); }
+.ap-notif-cell { justify-self: center; }
+.ap-notif-digest { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding-block-start: var(--space-3); border-block-start: 1px solid var(--line); }
+.ap-notif-digest p { margin: 0; }
+@media (max-width: 560px) { .ap-notif-head, .ap-notif-list > li { grid-template-columns: minmax(0, 1fr) 52px 52px; } }
+
+/* Two-step setup: the QR code beside the steps, then the backup code. */
+.ap-2fa { display: grid; grid-template-columns: 168px minmax(0, 1fr); gap: var(--space-5); align-items: center; }
+@media (max-width: 560px) { .ap-2fa { grid-template-columns: minmax(0, 1fr); justify-items: start; } }
+.ap-qr { inline-size: 168px; block-size: 168px; border-radius: var(--radius-md); }
+.ap-backup { display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-4); border: 1px dashed var(--line-strong); border-radius: var(--radius-md); }
+.ap-backup p { margin: 0; }

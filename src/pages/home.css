@@ -1,0 +1,69 @@
+/* Home page layout. Tokens only, logical properties only; components style themselves. Prefix: home-. */
+
+.home-more {
+  display: flex;
+  justify-content: center;
+  margin-block-start: var(--space-7);
+}
+
+/* Is this you? */
+.home-pain {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: var(--space-8);
+  align-items: center;
+}
+.home-pain-head { display: grid; gap: var(--space-3); }
+.home-pain-card { display: grid; gap: var(--space-5); }
+
+/* Meet the practitioner */
+.home-founder {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: center;
+}
+.home-founder-story {
+  display: grid;
+  gap: var(--space-3);
+  font-size: var(--body-lg-font-size);
+  line-height: var(--body-lg-line-height);
+  color: var(--ink-muted);
+  margin-block-end: var(--space-2);
+}
+
+/* Membership teaser */
+.home-members {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+  gap: var(--space-7);
+  align-items: center;
+}
+.home-members-plans {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+  align-items: start;
+}
+
+/* Free guide opt-in */
+.home-optin {
+  display: grid;
+  gap: var(--space-4);
+  justify-items: start;
+  max-inline-size: 480px;
+  margin-block-start: var(--space-2);
+}
+.home-optin .sg-field { inline-size: 100%; }
+.home-optin-done { max-inline-size: 560px; margin-block-start: var(--space-2); }
+
+
+@media (max-width: 960px) {
+  .home-pain,
+  .home-founder,
+  .home-members { grid-template-columns: 1fr; gap: var(--space-6); }
+}
+
+@media (max-width: 640px) {
+  .home-members-plans { grid-template-columns: 1fr; }
+}

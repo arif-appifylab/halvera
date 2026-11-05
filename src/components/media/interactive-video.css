@@ -1,0 +1,655 @@
+/* Interactive video (InteractiveVideo.jsx): our Video.js 10 controls themed with our tokens, the cue
+   panels over the paused video and the "In this video" list. Tokens only, logical properties only. */
+
+.iv { display: grid; gap: var(--space-4); min-inline-size: 0; }
+
+/* ---------- Player (the Video.js Container: layout box, fullscreen target, hotkey surface) ---------- */
+
+.iv-player {
+  --iv-stage: var(--surface-inverse);
+  --iv-caption-y: 0px;
+  container: iv / inline-size;
+  position: relative;
+  display: grid;
+  grid-template: minmax(0, 1fr) / minmax(0, 1fr);
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--iv-stage);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+}
+[data-theme="dark"] .iv-player { --iv-stage: var(--surface-sunken); }
+.iv-player:fullscreen { aspect-ratio: auto; border-radius: 0; }
+
+.iv-player:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.iv-media,
+.iv-poster {
+  grid-area: 1 / 1;
+  inline-size: 100%;
+  block-size: 100%;
+  min-block-size: 0;
+}
+.iv-media { display: block; object-fit: contain; background: var(--iv-stage); }
+
+/* Native captions: lifted clear of the control bar while it shows (Chromium and WebKit). */
+.iv-player[data-controls-visible] { --iv-caption-y: calc(-1 * var(--space-8)); }
+.iv-media::-webkit-media-text-track-container {
+  translate: 0 var(--iv-caption-y);
+  font-family: var(--font-sans);
+  transition: translate 200ms ease-out;
+}
+
+.iv-poster { position: relative; z-index: 1; pointer-events: none; }
+.iv-poster:not([data-visible]) { display: none; }
+.iv-poster-img { display: block; inline-size: 100%; block-size: 100%; object-fit: contain; }
+
+.iv-buffering {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  color: var(--surface);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+.iv-buffering[data-visible] { opacity: 1; }
+.iv-spinner { inline-size: 40px; block-size: 40px; animation: iv-spin 900ms linear infinite; }
+
+/* The big play button, until the video has started. */
+.iv-big-play {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: 50%;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  inline-size: 64px;
+  block-size: 64px;
+  translate: -50% -50%;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: var(--shadow-md);
+  cursor: pointer;
+  transition: scale 150ms ease;
+}
+[dir="rtl"] .iv-big-play { translate: 50% -50%; }
+.iv-big-play:hover { scale: 1.06; }
+.iv-big-play:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.iv-big-play svg { inline-size: 28px; block-size: 28px; margin-inline-start: 3px; }
+.iv-big-play[data-started],
+.iv-player.has-cue .iv-big-play { display: none; }
+
+/* ---------- Control bar (always the dark palette: data-theme="dark" on it, it sits on the video) ---------- */
+
+.iv-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(to top, var(--overlay), transparent 45%);
+  pointer-events: none;
+  transition: opacity 250ms ease;
+}
+
+.iv-controls {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  z-index: 4;
+  display: grid;
+  gap: var(--space-1);
+  padding-block: 0 var(--space-2);
+  padding-inline: var(--space-3);
+  background: none;
+  color: var(--ink);
+  transition: opacity 250ms ease;
+}
+.iv-backdrop:not([data-visible]),
+.iv-controls:not([data-visible]):not(:has(:focus-visible)) { opacity: 0; }
+.iv-controls:not([data-visible]):not(:has(:focus-visible)) * { pointer-events: none; }
+
+.iv-bar { display: flex; align-items: center; gap: var(--space-1); min-inline-size: 0; }
+.iv-bar-gap { flex: 1; }
+
+.iv-btn {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  inline-size: 40px;
+  block-size: 40px;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-md);
+  background: none;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.iv-btn:hover,
+.iv-btn[data-open] { background: color-mix(in srgb, var(--ink) 16%, transparent); }
+.iv-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.iv-btn[data-disabled] { opacity: 0.5; cursor: not-allowed; }
+.iv-btn svg { inline-size: 22px; block-size: 22px; }
+
+/* One icon per state. */
+.iv-play .iv-i-restart,
+.iv-play .iv-i-play,
+.iv-play .iv-i-pause,
+.iv-mute svg,
+.iv-captions svg,
+.iv-pip svg,
+.iv-fs svg { display: none; }
+.iv-play[data-ended] .iv-i-restart,
+.iv-play[data-paused]:not([data-ended]) .iv-i-play,
+.iv-play:not([data-paused]) .iv-i-pause,
+.iv-mute[data-volume-level="off"] .iv-i-off,
+.iv-mute[data-volume-level="low"] .iv-i-low,
+.iv-mute[data-volume-level="medium"] .iv-i-low,
+.iv-mute[data-volume-level="high"] .iv-i-high,
+.iv-captions:not([data-active]) .iv-i-cc-off,
+.iv-captions[data-active] .iv-i-cc-on,
+.iv-pip:not([data-pip]) .iv-i-pip-enter,
+.iv-pip[data-pip] .iv-i-pip-exit,
+.iv-fs:not([data-fullscreen]) .iv-i-fs-enter,
+.iv-fs[data-fullscreen] .iv-i-fs-exit { display: block; }
+
+.iv-time {
+  display: inline-flex;
+  gap: var(--space-1);
+  padding-inline: var(--space-2);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.iv-time-sep { color: var(--ink-muted); }
+
+/* ---------- Popups (tooltips, menus, volume): rendered in the top layer, so they work in fullscreen ---------- */
+
+.iv-pop {
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: var(--surface-raised);
+  box-shadow: var(--shadow-md);
+  font-family: var(--font-sans);
+  transition: opacity 120ms ease, scale 120ms ease;
+}
+.iv-pop:is([data-starting-style], [data-ending-style]) { opacity: 0; scale: 0.97; }
+
+.iv-tip {
+  --media-tooltip-side-offset: var(--space-2);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-block: var(--space-1);
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-sm);
+  font-size: var(--caption-font-size);
+  line-height: var(--caption-line-height);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.iv-tip-key:empty { display: none; }
+.iv-tip-key {
+  padding-inline: var(--space-1);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  color: var(--ink-muted);
+}
+
+.iv-volume {
+  --media-popover-side-offset: var(--space-2);
+  padding-block: var(--space-3);
+  padding-inline: var(--space-2);
+  border-radius: var(--radius-lg);
+}
+.iv-vslider {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  inline-size: 24px;
+  block-size: 96px;
+  cursor: pointer;
+  touch-action: none;
+}
+.iv-vtrack {
+  position: absolute;
+  inset-block: 0;
+  inline-size: 4px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: var(--line-strong);
+}
+.iv-vfill {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-end: 0;
+  block-size: var(--media-slider-fill);
+  background: var(--primary);
+}
+.iv-vthumb {
+  position: absolute;
+  inset-block-end: var(--media-slider-fill);
+  inline-size: 14px;
+  block-size: 14px;
+  translate: 0 50%;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+}
+.iv-vthumb:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+
+.iv-menu {
+  --media-menu-side-offset: var(--space-2);
+  min-inline-size: 13rem;
+  max-inline-size: min(20rem, var(--media-menu-available-width, 20rem));
+  max-block-size: var(--media-menu-available-height, 20rem);
+  overflow: auto;
+  overscroll-behavior: contain;
+  border-radius: var(--radius-lg);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+}
+.iv-menu-content { display: grid; gap: 2px; padding: var(--space-1); outline: none; }
+.iv-menu-content[data-child-open] { display: none; }
+.iv-menu-group { display: grid; gap: 2px; }
+.iv-menu-sep { block-size: 1px; margin-block: var(--space-1); background: var(--line); }
+
+.iv-menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  min-block-size: 36px;
+  padding-inline: var(--space-3);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  user-select: none;
+}
+.iv-menu-item[data-highlighted] { background: color-mix(in srgb, var(--ink) 12%, transparent); }
+.iv-menu-item:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.iv-menu-item[aria-disabled="true"],
+.iv-menu-item[data-disabled] { color: var(--ink-muted); cursor: not-allowed; }
+.iv-menu-item[aria-checked="true"] { font-weight: var(--body-strong-font-weight); }
+.iv-menu-back { justify-content: flex-start; font-weight: var(--body-strong-font-weight); }
+
+.iv-menu-hint { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--ink-muted); white-space: nowrap; }
+.iv-menu-chevron { inline-size: 16px; block-size: 16px; }
+.iv-menu-chevron.is-back { rotate: 180deg; }
+[dir="rtl"] .iv-menu-chevron { rotate: 180deg; }
+[dir="rtl"] .iv-menu-chevron.is-back { rotate: none; }
+.iv-menu-check { display: inline-grid; color: var(--primary); opacity: 0; }
+.iv-menu-check svg { inline-size: 16px; block-size: 16px; }
+[aria-checked="true"] > .iv-menu-check { opacity: 1; }
+.iv-menu-chapter { display: flex; flex: 1; align-items: baseline; justify-content: space-between; gap: var(--space-3); min-inline-size: 0; }
+
+/* ---------- Timeline: chapter segments, buffer, fill, thumb, preview and the cue markers ---------- */
+
+.iv-slider {
+  position: relative;
+  display: flex;
+  align-items: center;
+  block-size: 24px;
+  margin-inline: var(--space-2);
+  cursor: pointer;
+  touch-action: none;
+}
+.iv-chapters { position: relative; inline-size: 100%; block-size: 100%; }
+.iv-chapter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+}
+.iv-track {
+  position: absolute;
+  inset-inline: 0;
+  block-size: 5px;
+  overflow: hidden;
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--ink) 30%, transparent);
+  /* Each chapter shows only its own stretch, with a small gap between chapters. */
+  clip-path: inset(0 calc(100% - var(--media-slider-chapter-end, 100%) + 2px) 0 calc(var(--media-slider-chapter-start, 0%) + 2px) round var(--radius-pill));
+  transition: block-size 150ms ease;
+}
+.iv-chapter[data-highlighted] .iv-track { block-size: 8px; }
+.iv-track-buffer,
+.iv-track-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+}
+.iv-track-buffer { inline-size: var(--media-slider-buffer); background: color-mix(in srgb, var(--ink) 30%, transparent); }
+.iv-track-fill { inline-size: var(--media-slider-fill); background: var(--primary); }
+.iv-slider[data-dragging] .iv-track-fill { inline-size: var(--media-slider-pointer); }
+
+.iv-thumb {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-start: var(--media-slider-fill);
+  z-index: 4;
+  inline-size: 14px;
+  block-size: 14px;
+  translate: -50% -50%;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  box-shadow: 0 0 0 2px var(--primary);
+}
+.iv-slider[data-dragging] .iv-thumb { inset-inline-start: var(--media-slider-pointer); }
+.iv-thumb:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+
+.iv-preview {
+  position: absolute;
+  inset-block-end: 100%;
+  inset-inline-start: var(--media-slider-pointer);
+  z-index: 5;
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  margin-block-end: var(--space-2);
+  padding-block: var(--space-1);
+  padding-inline: var(--space-2);
+  translate: -50% 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font-size: var(--caption-font-size);
+  line-height: var(--caption-line-height);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.iv-slider[data-pointing] .iv-preview,
+.iv-slider[data-dragging] .iv-preview { opacity: 1; }
+.iv-preview-title:empty { display: none; }
+.iv-preview-title { font-weight: var(--label-font-weight); }
+.iv-preview-time { font-variant-numeric: tabular-nums; color: var(--ink-muted); }
+
+/* Cue markers (decorative; the list below is the accessible version). */
+.iv-marks {
+  position: absolute;
+  inset: 0;
+  z-index: 3; /* above the track fill, below the thumb */
+  pointer-events: none;
+}
+
+.iv-mark {
+  position: absolute;
+  inset-block-start: 50%;
+  display: grid;
+  place-items: center;
+  inline-size: 9px;
+  block-size: 9px;
+  translate: -50% -50%;
+  border-radius: var(--radius-pill);
+  background: var(--ink);
+  box-shadow: 0 0 0 2px var(--surface-sunken);
+}
+.iv-mark.is-question { background: var(--accent); }
+.iv-mark.is-done { background: var(--primary); }
+.iv-mark.is-lock {
+  inline-size: 16px;
+  block-size: 16px;
+  background: var(--accent);
+  color: var(--on-accent);
+}
+
+/* From the unanswered required question to the end: dimmed, so the lock reads before you drag. */
+.iv-marks-locked {
+  position: absolute;
+  inset-block-start: 50%;
+  inset-inline-end: 0;
+  block-size: 8px;
+  translate: 0 -50%;
+  border-radius: var(--radius-sm);
+  background: repeating-linear-gradient(135deg, var(--overlay) 0 3px, transparent 3px 6px);
+}
+
+/* A small player (narrow column, phone): fewer controls in the bar. */
+@container iv (inline-size < 30rem) {
+  .iv-controls { padding-inline: var(--space-1); }
+  .iv-btn { inline-size: 36px; block-size: 36px; }
+  .iv-time-sep,
+  .iv-time > :last-child { display: none; }
+}
+
+/* ---------- Chapter note (doesn't pause the video) ---------- */
+
+.iv-note {
+  position: absolute;
+  inset-block-start: var(--space-4);
+  inset-inline-start: var(--space-4);
+  z-index: var(--z-overlay);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  max-inline-size: min(24rem, calc(100% - 2 * var(--space-4)));
+  padding-block: var(--space-3);
+  padding-inline: var(--space-4) var(--space-3);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow-md);
+  user-select: text;
+  animation: iv-in 180ms ease-out;
+}
+.iv-note-icon { flex: none; margin-block-start: var(--space-1); color: var(--primary); }
+.iv-note-text { display: grid; gap: var(--space-1); min-inline-size: 0; }
+.iv-note-title,
+.iv-note-body { margin: 0; }
+.iv-note-title { font-size: var(--label-font-size); line-height: var(--label-line-height); font-weight: var(--label-font-weight); }
+.iv-note-body { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--ink-muted); }
+.iv-note-close { flex: none; margin-inline-start: auto; }
+
+/* ---------- Cue panel over the paused video ---------- */
+
+.iv-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-overlay);
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  overflow: auto;
+  border-radius: inherit;
+  background: var(--overlay);
+  cursor: auto;
+  animation: iv-fade 150ms ease-out;
+}
+
+.iv-panel {
+  display: grid;
+  gap: var(--space-3);
+  inline-size: min(100%, 34rem);
+  max-block-size: 100%;
+  overflow: auto;
+  padding: var(--space-5);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow-lg);
+  user-select: text;
+  overscroll-behavior: contain;
+  animation: iv-in 180ms ease-out;
+}
+
+.iv-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+}
+.iv-kicker > svg { color: var(--primary); }
+
+.iv-title {
+  margin: 0;
+  font-family: var(--heading-3-font-family);
+  font-size: var(--heading-3-font-size);
+  line-height: var(--heading-3-line-height);
+  font-weight: var(--heading-3-font-weight);
+}
+.iv-title:focus { outline: none; }
+.iv-title:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+.iv-body { margin: 0; color: var(--ink-muted); }
+
+.iv-form { display: grid; gap: var(--space-3); }
+
+.iv-options {
+  display: grid;
+  gap: var(--space-2);
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+.iv-prompt {
+  padding: 0;
+  margin-block-end: var(--space-2);
+  font-size: var(--body-font-size);
+  line-height: var(--body-line-height);
+  font-weight: var(--body-strong-font-weight);
+}
+
+.iv-feedback-slot:empty { display: none; }
+.iv-feedback {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  padding: var(--space-3);
+  border-radius: var(--radius-md);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+}
+.iv-feedback > svg { flex: none; margin-block-start: 1px; }
+.iv-feedback.is-correct { background: var(--success-soft); }
+.iv-feedback.is-correct > svg { color: var(--success); }
+.iv-feedback.is-wrong { background: var(--info-soft); }
+.iv-feedback.is-wrong > svg { color: var(--info); }
+
+.iv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.iv-hint { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--ink-muted); }
+
+/* A small player (narrow column, phone): tighter panels that scroll inside the video. */
+@container iv (inline-size < 35rem) {
+  .iv-overlay { padding: var(--space-2); }
+  .iv-panel { gap: var(--space-2); padding: var(--space-4); }
+  .iv-title { font-size: var(--heading-4-font-size); line-height: var(--heading-4-line-height); }
+  .iv-prompt { margin-block-end: var(--space-1); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+  .iv-note { inset-block-start: var(--space-2); inset-inline-start: var(--space-2); max-inline-size: calc(100% - 2 * var(--space-2)); }
+  .iv-note-body { display: none; }
+}
+
+/* ---------- "In this video" ---------- */
+
+.iv-list { display: grid; gap: var(--space-3); }
+.iv-list-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-4); }
+.iv-list-head h2 { margin: 0; }
+
+.iv-progress {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+}
+.iv-progress-done { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--success); font-weight: var(--body-strong-font-weight); }
+
+.iv-cues {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+.iv-cue { display: flex; flex-wrap: wrap; align-items: center; gap: 0 var(--space-3); padding-inline-end: var(--space-3); }
+.iv-cue + .iv-cue { border-block-start: 1px solid var(--line); }
+
+.iv-cue-btn {
+  display: flex;
+  flex: 1 1 16rem;
+  align-items: center;
+  gap: var(--space-3);
+  min-inline-size: 0;
+  min-block-size: 56px;
+  padding-block: var(--space-3);
+  padding-inline: var(--space-4);
+  border: 0;
+  background: none;
+  color: var(--ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.iv-cue-btn:hover { background: var(--surface-sunken); }
+.iv-cue-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.iv-cue.is-locked .iv-cue-btn { cursor: not-allowed; color: var(--ink-muted); }
+.iv-cue.is-locked .iv-cue-btn:hover { background: none; }
+
+.iv-cue-time {
+  flex: none;
+  min-inline-size: 3.5ch;
+  font-variant-numeric: tabular-nums;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+}
+.iv-cue-text { display: grid; flex: 1; min-inline-size: 0; }
+.iv-cue-title { font-weight: var(--body-strong-font-weight); }
+.iv-cue-kind { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--ink-muted); }
+
+.iv-cue-state {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+}
+.iv-cue.is-done .iv-cue-state { color: var(--success); }
+.iv-cue.is-lock .iv-cue-state { color: var(--accent-ink); }
+
+.iv-cue-again { margin-inline-start: auto; }
+
+.iv-lock-hint {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+}
+.iv-lock-hint > svg { flex: none; margin-block-start: 2px; }
+
+@keyframes iv-fade { from { opacity: 0; } }
+@keyframes iv-spin { to { rotate: 360deg; } }
+@keyframes iv-in { from { opacity: 0; translate: 0 6px; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .iv *, .iv *::before, .iv *::after { transition: none; animation: none; }
+  .iv-spinner { animation: iv-spin 2400ms linear infinite; } /* slow, so loading still reads */
+}

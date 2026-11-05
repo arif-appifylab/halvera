@@ -1,0 +1,82 @@
+/* Header account menu. Prefix: am-. Tokens only, logical properties only. */
+
+.am { position: relative; display: inline-flex; }
+
+.am-button {
+  display: inline-flex;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  cursor: pointer;
+}
+.am-button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.am-button[aria-expanded="true"] .sg-avatar { box-shadow: 0 0 0 2px var(--primary); }
+
+.am-panel {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  z-index: var(--z-dropdown);
+  display: grid;
+  gap: var(--space-1);
+  inline-size: 280px;
+  padding: var(--space-2);
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+}
+
+.am-who {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3) var(--space-3);
+  border-block-end: 1px solid var(--line);
+  margin-block-end: var(--space-1);
+}
+.am-who-text { display: grid; min-inline-size: 0; margin: 0; }
+.am-who-text > * { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.am-links { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+
+.am-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  inline-size: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  font-weight: 500;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+}
+.am-link .sg-icon { flex: none; color: var(--ink-muted); }
+.am-link:hover { background: var(--surface-sunken); color: var(--ink); }
+.am-link:focus-visible { outline: 2px solid var(--focus); outline-offset: 0; }
+
+.am-theme {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  margin-block: var(--space-1);
+  border-block: 1px solid var(--line);
+}
+
+.am-theme .sg-segmented { display: flex; inline-size: 100%; }
+.am-theme .sg-seg { flex: 1; justify-content: center; }
+
+.am-logout { color: var(--ink-muted); }
+
+.am-mobile { display: grid; gap: 2px; padding-block-start: var(--space-3); border-block-start: 1px solid var(--line); }
+.am-mobile .am-who { border: 0; padding-inline: var(--space-1); }
+.am-mobile .am-link { padding-inline: var(--space-1); font-size: 17px; }

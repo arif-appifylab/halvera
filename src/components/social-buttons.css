@@ -1,0 +1,4 @@
+/* Sign-in buttons (./SocialButtons.jsx). Tokens and logical properties only. */
+.social-btn > span { display: inline-flex; align-items: center; gap: var(--space-3); }
+.social-btn svg { flex: none; }
+.social-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: var(--space-3); }

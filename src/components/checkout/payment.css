@@ -1,0 +1,42 @@
+/* Payment methods and the grouped card field, shared by checkout (./PaymentStep.jsx) and the appointment
+   booking page. Prefix co-. Tokens and logical properties only. */
+
+/* Payment method: accordion-style radio group, rows sharing borders. */
+.co-methods { display: grid; border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+.co-method { position: relative; border: 1.5px solid var(--line-strong); background: var(--surface-raised); }
+.co-method + .co-method { margin-block-start: -1.5px; }
+.co-method:first-of-type { border-start-start-radius: var(--radius-md); border-start-end-radius: var(--radius-md); }
+.co-method:last-of-type { border-end-start-radius: var(--radius-md); border-end-end-radius: var(--radius-md); }
+.co-method.is-open { z-index: 1; border-color: var(--primary); }
+.co-method:has(.co-method-input:focus-visible) { z-index: 2; outline: 2px solid var(--focus); outline-offset: 2px; }
+.co-method-head { display: flex; align-items: center; gap: var(--space-3); padding: var(--space-4); cursor: pointer; font-weight: var(--body-strong-font-weight); }
+.co-method-input { position: absolute; opacity: 0; inline-size: 1px; block-size: 1px; margin: 0; }
+.co-method-dot { flex: none; inline-size: 20px; block-size: 20px; border-radius: 50%; border: 1.5px solid var(--line-strong); background: var(--surface-raised); }
+.is-open .co-method-dot { border: 6px solid var(--primary); }
+.co-method-title { flex: 1 1 auto; }
+.is-open .co-method-title { color: var(--primary-ink); }
+.co-method-icon { flex: none; color: var(--ink-muted); }
+.co-method-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); padding: 0 var(--space-4) var(--space-5); }
+
+/* One grouped card control: number on top, expiry | CVC below. */
+.co-cardgroup-field { display: grid; gap: var(--space-2); }
+.co-cardgroup { border: 1.5px solid var(--line-strong); border-radius: var(--radius-md); background: var(--surface-raised); box-shadow: var(--shadow-sm); }
+.co-cardgroup:hover { border-color: var(--ink-muted); }
+.co-cardgroup.has-error { border-color: var(--danger); }
+.co-cardgroup-row { position: relative; display: flex; }
+.co-cardgroup-split { border-block-start: 1.5px solid var(--line-strong); }
+.co-cardgroup-input {
+  flex: 1 1 0; min-inline-size: 0; margin: 0; border: 0; background: transparent; color: var(--ink);
+  font: inherit; font-size: var(--body-font-size); line-height: var(--body-line-height);
+  padding: var(--space-3) var(--space-4);
+}
+.co-cardgroup-input::placeholder { color: var(--ink-subtle); }
+.co-cardgroup-input:focus { outline: 2px solid var(--focus); outline-offset: -2px; }
+.co-cardgroup-row:first-child .co-cardgroup-input { padding-inline-end: var(--space-8); border-start-start-radius: var(--radius-md); border-start-end-radius: var(--radius-md); }
+.co-cardgroup-split .co-cardgroup-input:first-child { border-end-start-radius: var(--radius-md); }
+.co-cardgroup-split .co-cardgroup-input + .co-cardgroup-input { border-inline-start: 1.5px solid var(--line-strong); border-end-end-radius: var(--radius-md); }
+.co-cardgroup-icon { position: absolute; inset-inline-end: var(--space-4); inset-block-start: 50%; translate: 0 -50%; color: var(--ink-muted); pointer-events: none; }
+.co-cardgroup-input[aria-invalid="true"] { color: var(--danger); }
+
+.co-bank { display: grid; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-radius: var(--radius-md); background: var(--surface-sunken); }
+

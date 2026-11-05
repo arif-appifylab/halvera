@@ -1,0 +1,107 @@
+/* Ebook lesson: the cover in the lesson and the full-screen reader (./BookReader.jsx). Prefix br-.
+   Tokens and logical properties only. */
+
+.br-cover {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-6);
+  padding: var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+}
+.br-cover-art {
+  display: grid;
+  align-content: center;
+  gap: var(--space-3);
+  inline-size: 150px;
+  aspect-ratio: 3 / 4;
+  padding: var(--space-4);
+  border-radius: var(--radius-sm) var(--radius-md) var(--radius-md) var(--radius-sm);
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: var(--shadow-md), inset 6px 0 0 color-mix(in oklab, var(--on-primary) 18%, transparent);
+}
+.br-cover-title {
+  font-family: var(--font-display);
+  font-size: var(--heading-4-font-size);
+  line-height: var(--heading-4-line-height);
+  text-wrap: balance;
+}
+.br-cover-author { font-size: var(--caption-font-size); line-height: var(--caption-line-height); opacity: 0.85; }
+.br-cover-text { display: grid; gap: var(--space-2); justify-items: start; min-inline-size: 0; }
+.br-cover-text > div { margin-block-start: var(--space-2); }
+@media (max-width: 560px) {
+  .br-cover { grid-template-columns: minmax(0, 1fr); padding: var(--space-5); }
+  .br-cover-art { inline-size: 120px; }
+}
+
+/* The reader fills the whole window (and the screen, in the browser's full screen). */
+.br-reader {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-toast) + 1); /* above everything, including the theme preview bar */
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  background: var(--surface-sunken);
+  color: var(--ink);
+}
+.br-bar,
+.br-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  background: var(--surface-raised);
+}
+.br-bar { border-block-end: 1px solid var(--line); }
+.br-nav {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  border-block-start: 1px solid var(--line);
+}
+.br-nav > :first-child { justify-self: start; }
+.br-nav > :last-child { justify-self: end; }
+.br-name { display: flex; align-items: center; gap: var(--space-2); min-inline-size: 0; }
+.br-name > .sg-icon { flex: none; color: var(--primary); }
+.br-name .t-strong { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.br-tools { display: flex; align-items: center; gap: var(--space-3); flex: none; }
+.br-count {
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+  font-variant-numeric: tabular-nums;
+}
+.br-stage { display: grid; grid-template-columns: minmax(0, 1fr); align-content: center; min-block-size: 0; overflow: hidden auto; }
+.br-stage .fb-stage { background: transparent; }
+
+.br-size {
+  display: inline-flex;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+.br-size-btn {
+  min-inline-size: 44px;
+  min-block-size: 36px;
+  padding-inline: var(--space-3);
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: var(--body-sm-font-size);
+  line-height: 1;
+  cursor: pointer;
+}
+.br-size-btn.is-large { font-size: var(--body-lg-font-size); border-inline-start: 1px solid var(--line-strong); }
+.br-size-btn:hover:not(:disabled) { background: var(--surface-sunken); }
+.br-size-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.br-size-btn:disabled { color: var(--ink-subtle); cursor: default; }
+
+@media (max-width: 560px) {
+  .br-bar, .br-nav { padding: var(--space-2) var(--space-3); }
+  .br-author { display: none; }
+  .br-count { font-size: var(--caption-font-size); }
+}

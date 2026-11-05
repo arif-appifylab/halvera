@@ -1,0 +1,27 @@
+/* What we help with (/conditions) and condition pages (/conditions/:slug). Prefix: cond-.
+   Tokens only; logical properties only. */
+
+/* The first section after the hero or page head needs less top space. */
+.cond-first { padding-block-start: var(--space-6); }
+
+/* "Not sure where you fit?" */
+.cond-unsure { display: grid; gap: var(--space-3); justify-items: center; text-align: center; }
+.cond-unsure-actions { justify-content: center; margin-block-start: var(--space-3); }
+
+/* Common signs beside the photo. */
+.cond-signs {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: center;
+}
+.cond-signs-note { padding-block-start: var(--space-3); border-block-start: 1px solid var(--line); }
+.cond-media { border-end-end-radius: 120px; }
+.cond-media-img { display: block; inline-size: 100%; block-size: auto; object-fit: cover; }
+@media (max-width: 768px) {
+  .cond-signs { grid-template-columns: 1fr; gap: var(--space-6); }
+  .cond-media { border-end-end-radius: 80px; }
+}
+
+.cond-more { display: flex; justify-content: center; margin-block-start: var(--space-7); }
+

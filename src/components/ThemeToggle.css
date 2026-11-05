@@ -1,0 +1,45 @@
+/* Header theme menu. Tokens only, logical properties only. */
+
+.tt { position: relative; display: inline-flex; }
+
+.tt-menu {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  z-index: var(--z-dropdown);
+  display: grid;
+  gap: 2px;
+  min-inline-size: 200px;
+  padding: var(--space-1);
+  background: var(--surface-raised);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-md);
+}
+
+.tt-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  inline-size: 100%;
+  padding-block: var(--space-2);
+  padding-inline: var(--space-3);
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--ink);
+  font-family: var(--body-sm-font-family);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  text-align: start;
+  cursor: pointer;
+}
+.tt-item .sg-icon { flex: none; color: var(--ink-muted); }
+.tt-item:hover,
+.tt-item:focus-visible { background: var(--surface-sunken); }
+.tt-item:focus-visible { outline: 2px solid var(--focus); outline-offset: 0; }
+.tt-item[aria-checked="true"] { font-weight: var(--label-font-weight); }
+.tt-item[aria-checked="true"] .sg-icon { color: var(--primary); }
+.tt-item-label { flex: 1; }
+.tt-item-check { display: inline-flex; inline-size: 16px; }

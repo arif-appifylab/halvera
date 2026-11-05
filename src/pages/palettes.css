@@ -1,0 +1,120 @@
+/* /palettes: the colour palette comparison page. Prefix: pal-. Tokens only; logical properties only.
+   Swatch chips take their colour from data (inline style); everything else uses tokens. */
+
+.pal-status:not(:empty) { margin-block-end: var(--space-6); }
+
+.pal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-6);
+  align-items: start;
+}
+@media (max-width: 960px) { .pal-grid { grid-template-columns: minmax(0, 1fr); } }
+
+.pal-card {
+  display: grid;
+  gap: var(--space-5);
+  padding: var(--space-6);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+@media (max-width: 640px) { .pal-card { padding: var(--space-5); } }
+.pal-card-head { display: grid; gap: var(--space-2); }
+
+.pal-preview { display: grid; gap: var(--space-3); }
+
+/* The home page renders at 1280px wide inside the iframe and is scaled to the card's width
+   (--pal-scale is set from the frame's measured width). */
+.pal-frame {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1280 / 1440;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+}
+.pal-frame iframe {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1280px;
+  block-size: 1440px;
+  border: 0;
+  transform: scale(var(--pal-scale, 0.42));
+  transform-origin: top left;
+}
+[dir="rtl"] .pal-frame iframe { transform-origin: top right; }
+.pal-frame-loading {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  margin: 0;
+}
+.pal-frame.is-loaded .pal-frame-loading { visibility: hidden; }
+
+.pal-swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: var(--space-3);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.pal-swatch { display: grid; gap: var(--space-1); align-content: start; }
+.pal-chip {
+  display: block;
+  block-size: 44px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+}
+.pal-swatch-label { color: var(--ink-muted); }
+.pal-swatch-hex {
+  font-family: var(--code-font-family);
+  font-size: var(--caption-font-size);
+  line-height: var(--caption-line-height);
+  color: var(--ink);
+}
+
+.pal-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+
+.pal-sr {
+  position: absolute;
+  inline-size: 1px;
+  block-size: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+
+/* The page-wide light/dark switch for every preview, and the two groups (colours, design style). */
+.pal-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-block-end: var(--space-6);
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.pal-group { display: grid; gap: var(--space-5); }
+.pal-group + .pal-group { margin-block-start: var(--space-8); }
+.pal-group-head { display: grid; gap: var(--space-2); max-inline-size: 70ch; }
+.pal-grid.is-three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .pal-grid.is-three { grid-template-columns: minmax(0, 1fr); } }
+/* The footer previews show the end of the page: a shorter frame. */
+.pal-frame.is-footer { aspect-ratio: 1280 / 960; }
+.pal-frame.is-footer iframe { block-size: 960px; }
+/* Now vs this version (page, panels, tint), under each light-version preview. */
+.pal-tint-compare { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); color: var(--ink-muted); }
+.pal-tint-compare span { display: inline-flex; align-items: center; gap: var(--space-1); }
+.pal-tint-compare .pal-chip { display: inline-block; inline-size: 20px; block-size: 20px; }

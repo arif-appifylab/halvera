@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Halvera</title>
+    <script>
+      // Theme, before first paint so there is no flash. Must agree with src/app/theme.js:
+      // localStorage 'halvera-theme' is 'light' or 'dark'; anything else (or no key) means
+      // 'system', which follows the device.
+      (function () {
+        var t = null;
+        try { t = localStorage.getItem('halvera-theme'); } catch (e) {}
+        if (t !== 'light' && t !== 'dark') {
+          t = window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+        var root = document.documentElement;
+        // Palette and design style (src/app/palette.js and design-style.js own saving): applied
+        // here too so they paint first. Midnight is the default palette; Sage (the tokens.css
+        // base) has no attribute. ?theme= is the /palettes preview override.
+        var q = new URLSearchParams(location.search), p = q.get('palette'), s = q.get('style');
+        var pals = ['sage', 'clay', 'plum', 'tide', 'evergreen', 'midnight', 'stone', 'ocean'];
+        if (pals.indexOf(p) < 0) { try { p = localStorage.getItem('halvera-palette'); } catch (e) {} }
+        if (pals.indexOf(p) < 0) p = 'midnight';
+        if (p !== 'sage') root.setAttribute('data-palette', p);
+        if (!s) { try { s = localStorage.getItem('halvera-style'); } catch (e) {} }
+        if (s === 'crisp' || s === 'editorial') root.setAttribute('data-style', s);
+        // Dark-mode footer option (src/app/dark-footer.js): 'deep' unless another is saved or previewed.
+        var f = q.get('darkfoot'), feet = ['deep', 'gold', 'tint', 'glow'];
+        if (feet.indexOf(f) < 0) { try { f = localStorage.getItem('halvera-darkfoot'); } catch (e) {} }
+        root.setAttribute('data-darkfoot', feet.indexOf(f) < 0 ? 'deep' : f);
+        // Light version (src/app/light-version.js): '1' (Pure white) unless another is saved or
+        // previewed; '0' is the original oat ground (no attribute).
+        var n = q.get('light'), lights = ['0', '1', '2', '3', '4'];
+        if (lights.indexOf(n) < 0) { try { n = localStorage.getItem('halvera-light'); } catch (e) {} }
+        if (lights.indexOf(n) < 0) n = '1';
+        if (n !== '0') root.setAttribute('data-light', n);
+        var ft = q.get('theme');
+        if (ft === 'light' || ft === 'dark') t = ft;
+        root.setAttribute('data-theme', t);
+        root.style.colorScheme = t;
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+/* Lesson video player (VideoPlayer.jsx). Tokens only, logical properties only. */
+
+.vp { display: grid; gap: var(--space-3); min-inline-size: 0; }
+
+.vp-stage {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  background: var(--surface-inverse);
+}
+
+.vp-frame,
+.vp-video {
+  position: absolute;
+  inset: 0;
+  display: block;
+  inline-size: 100%;
+  block-size: 100%;
+  border: 0;
+  border-radius: inherit;
+  background: var(--surface-inverse);
+}
+.vp-video { object-fit: contain; }
+
+.vp-frame:focus-visible,
+.vp-video:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: -4px;
+}
+
+/* Error: covers the stage, keeps the try again button reachable. */
+.vp-error {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--space-3);
+  padding: var(--space-6);
+  text-align: center;
+  background: var(--surface-sunken);
+  color: var(--ink);
+}
+.vp-error p { max-inline-size: 36ch; margin: 0; }
+.vp-error svg { color: var(--danger); }
+
+.vp-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vp *, .vp *::before, .vp *::after { transition: none; animation: none; }
+}
+
+/* Tools under the stage (file sources): the audio track menu, at the end. */
+.vp-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}

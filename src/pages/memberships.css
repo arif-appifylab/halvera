@@ -1,0 +1,70 @@
+/* Memberships page. Prefix: mem-. Tokens only; logical properties only. */
+
+/* Pricing follows the centred hero on the same ground, so it doesn't need its own top padding. */
+.mem-pricing.sg-section { padding-block-start: 0; }
+
+.mem-toggle {
+  display: flex;
+  justify-content: center;
+  margin-block-end: var(--space-7);
+}
+
+/* Up to three plans in a row (two on tablets, one on phones), centred when there are fewer (the JSX sets
+   --mem-cols and --mem-cols-md from the plans shown). Each plan spans two rows of a subgrid, card and note,
+   so the cards in a row are the same height whether or not they have a note under them. */
+.mem-plans {
+  display: grid;
+  grid-template-columns: repeat(var(--mem-cols, 3), minmax(0, 400px));
+  justify-content: center;
+  gap: var(--space-7) var(--space-5);
+}
+@media (max-width: 960px) { .mem-plans { grid-template-columns: repeat(var(--mem-cols-md, 2), minmax(0, 400px)); } }
+@media (max-width: 640px) { .mem-plans { grid-template-columns: minmax(0, 1fr); } }
+
+.mem-plan { display: grid; grid-row: span 2; grid-template-rows: subgrid; row-gap: var(--space-3); }
+.mem-plan-note { padding-inline: var(--space-2); text-align: center; }
+
+.mem-notes {
+  display: grid;
+  gap: var(--space-2);
+  max-inline-size: 640px;
+  margin-inline: auto;
+  margin-block-start: var(--space-6);
+  text-align: center;
+}
+.mem-notes a { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+
+/* What each plan opens. */
+/* Two plans per row, so the type tag and the title sit on one line. */
+.mem-included {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-5);
+}
+@media (max-width: 760px) { .mem-included { grid-template-columns: minmax(0, 1fr); } }
+.mem-included-card { display: grid; gap: var(--space-4); align-content: start; }
+.mem-included-list { display: grid; gap: var(--space-3); }
+.mem-included-list li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-3); }
+.mem-included-link {
+  color: var(--ink);
+  font-weight: var(--body-strong-font-weight);
+  text-decoration: underline;
+  text-decoration-color: var(--line-strong);
+  text-underline-offset: 3px;
+}
+.mem-included-link:hover { color: var(--primary); text-decoration-color: currentColor; }
+/* The plan's appointment allowances, together under one rule. */
+.mem-included-allow {
+  display: grid;
+  gap: var(--space-2);
+  padding-block-start: var(--space-4);
+  border-block-start: 1px solid var(--line);
+}
+.mem-included-allow li { display: flex; align-items: center; gap: var(--space-2); }
+
+.mem-stories {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: var(--space-5);
+}
+

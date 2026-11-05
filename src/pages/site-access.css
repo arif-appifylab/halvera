@@ -1,0 +1,32 @@
+/* Site access page (the access gate sold on its own). Prefix: sa-. Tokens only; logical properties only. */
+
+/* The pass picker follows the page head on the same ground. */
+.sa-main.sg-section { padding-block-start: var(--space-4); }
+
+/* Buy box first in the reading order; it sits in the inline-end column on wide screens. */
+.sa-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 420px;
+  gap: var(--space-8);
+  align-items: start;
+}
+.sa-buy {
+  grid-column: 2;
+  grid-row: 1;
+  position: sticky;
+  inset-block-start: calc(var(--header-height) + var(--space-5));
+}
+.sa-info { grid-column: 1; grid-row: 1; display: grid; gap: var(--space-7); }
+
+.sa-card { display: grid; gap: var(--space-5); }
+.sa-options { display: grid; gap: var(--space-3); border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+.sa-options legend { padding: 0; margin-block-end: var(--space-3); }
+.sa-small { text-align: center; }
+
+.sa-link { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+
+@media (max-width: 1024px) {
+  .sa-layout { grid-template-columns: 1fr; gap: var(--space-7); }
+  .sa-buy, .sa-info { grid-column: auto; grid-row: auto; }
+  .sa-buy { position: static; max-inline-size: 560px; }
+}

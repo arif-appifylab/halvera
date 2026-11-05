@@ -1,0 +1,82 @@
+/* Access gate. A calm centred panel on surface-raised. Tokens only. */
+
+.gate {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+  max-inline-size: 560px;
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-6);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  text-align: center;
+}
+
+.gate.is-compact {
+  padding: var(--space-6) var(--space-5);
+}
+
+.gate-icon {
+  display: grid;
+  place-items: center;
+  inline-size: 56px;
+  block-size: 56px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sage);
+  color: var(--primary-ink);
+}
+
+.gate-product {
+  font-size: var(--eyebrow-font-size);
+  line-height: var(--eyebrow-line-height);
+  font-weight: var(--eyebrow-font-weight);
+  letter-spacing: var(--eyebrow-letter-spacing);
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.gate-title {
+  font-family: var(--font-display);
+  font-size: var(--heading-3-font-size);
+  line-height: var(--heading-3-line-height);
+  font-weight: var(--heading-3-font-weight);
+}
+
+.gate-body {
+  color: var(--ink-muted);
+  max-inline-size: 440px;
+}
+
+.gate-extra {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-3);
+  inline-size: 100%;
+}
+
+.gate-form {
+  display: grid;
+  gap: var(--space-3);
+  inline-size: 100%;
+  max-inline-size: 360px;
+  text-align: start;
+}
+
+.gate-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+@media (max-width: 640px) {
+  .gate { padding: var(--space-6) var(--space-4); }
+  .gate-actions .sg-btn { inline-size: 100%; }
+}
+
+/* Membership and upgrade gates hold the plan picker. */
+.gate-picker {
+  inline-size: 100%;
+  max-inline-size: 440px;
+}

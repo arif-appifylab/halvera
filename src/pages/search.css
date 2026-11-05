@@ -1,0 +1,106 @@
+/* /search results. Prefix: srch-. Tokens and logical properties only. */
+
+.srch-body { padding-block: 0 var(--space-9); }
+@media (max-width: 768px) { .srch-body { padding-block-end: var(--space-8); } }
+
+.srch-form { display: flex; align-items: end; gap: var(--space-3); max-inline-size: 760px; }
+.srch-field { flex: 1; min-inline-size: 0; }
+@media (max-width: 480px) {
+  .srch-form { flex-direction: column; align-items: stretch; }
+}
+
+.srch-status { display: grid; gap: var(--space-3); }
+.srch-count {
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  font-weight: var(--body-strong-font-weight);
+  color: var(--ink);
+}
+
+.srch-chips, .srch-suggest { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.srch-suggest { justify-content: center; }
+.srch-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: 36px;
+  padding-inline: var(--space-4);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  cursor: pointer;
+  transition: background-color .15s;
+}
+.srch-chip .sg-icon { color: var(--ink-muted); }
+.srch-chip:hover { background: var(--surface-sunken); }
+.srch-chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.srch-chip[aria-pressed="true"] { background: var(--primary); border-color: var(--primary); color: var(--on-primary); }
+.srch-chip[aria-pressed="true"] .sg-icon { color: var(--on-primary); }
+
+.srch-groups { display: grid; gap: var(--space-7); }
+.srch-group { display: grid; gap: var(--space-3); justify-items: start; }
+.srch-group-title {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--heading-4-font-family);
+  font-size: var(--heading-4-font-size);
+  line-height: var(--heading-4-line-height);
+  font-weight: var(--heading-4-font-weight);
+}
+.srch-group-title .sg-icon { color: var(--primary-ink); }
+
+.srch-list {
+  inline-size: 100%;
+  display: grid;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+.srch-list > li + li { border-block-start: 1px solid var(--line); }
+.srch-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  color: var(--ink);
+  text-decoration: none;
+  transition: background-color .15s;
+}
+.srch-item > .sg-icon { flex: none; color: var(--ink-subtle); }
+.srch-item:hover { background: var(--surface-sunken); }
+.srch-item:hover > .sg-icon { color: var(--primary-ink); }
+.srch-item:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.srch-item-icon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: var(--radius-md);
+  background: var(--surface-sage);
+  color: var(--primary-ink);
+}
+.srch-item-text { flex: 1; min-inline-size: 0; display: grid; gap: var(--space-1); }
+.srch-item-title {
+  font-family: var(--font-display);
+  font-size: var(--heading-4-font-size);
+  line-height: var(--heading-4-line-height);
+  font-weight: var(--heading-3-font-weight);
+}
+.srch-item:hover .srch-item-title { color: var(--primary-ink); }
+.srch-item-desc { color: var(--ink-muted); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.srch-item-meta { color: var(--ink-muted); font-size: var(--caption-font-size); line-height: var(--caption-line-height); font-weight: var(--caption-font-weight); }
+@media (max-width: 480px) {
+  .srch-item { padding: var(--space-3) var(--space-4); gap: var(--space-3); }
+  .srch-item > .sg-icon { display: none; }
+}
+
+.srch-loading { display: grid; gap: var(--space-3); }
+.srch-skel { display: flex; align-items: center; gap: var(--space-4); padding: var(--space-4) var(--space-5); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-raised); }
+.srch-skel-text { flex: 1; display: grid; gap: var(--space-2); }

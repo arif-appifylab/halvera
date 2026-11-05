@@ -1,0 +1,37 @@
+/* Book an appointment (/appointment/:slug). Prefix: bk-. Tokens and logical properties only.
+   Picker styles (calendar, week, times, poll, intake) live in src/components/booking/booking-ui.css. */
+
+.bk-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-5); align-items: start; margin-block-start: var(--space-4); }
+.bk-head-text { display: grid; gap: var(--space-3); }
+.bk-meta { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); color: var(--ink-muted); }
+.bk-meta li { display: inline-flex; align-items: center; gap: var(--space-2); }
+.bk-meta .sg-icon { color: var(--primary); }
+.bk-price { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.bk-incl { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: var(--body-strong-font-weight); color: var(--ink); }
+.bk-incl .sg-icon { color: var(--primary); }
+
+
+.bk-body { padding-block-start: var(--space-4); }
+
+.bk-where { display: flex; align-items: center; gap: var(--space-2); color: var(--ink-muted); }
+.bk-where .sg-icon { color: var(--primary); flex: none; }
+
+.bk-magic { display: flex; gap: var(--space-4); align-items: center; padding: var(--space-5); border-radius: var(--radius-lg); background: var(--surface-sage); border: 1px solid var(--line); }
+.bk-magic > .sg-icon { color: var(--primary); flex: none; }
+.bk-magic-when { font-family: var(--heading-3-font-family); font-size: var(--heading-3-font-size); line-height: var(--heading-3-line-height); font-weight: var(--heading-3-font-weight); font-variant-numeric: tabular-nums; }
+
+.bk-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); padding-block-start: var(--space-2); }
+.bk-actions > :last-child { margin-inline-start: auto; }
+
+.bk-facts { margin-block: var(--space-2) var(--space-3); }
+.bk-picked { display: grid; gap: var(--space-2); margin-block-start: var(--space-3); }
+.bk-picked li { display: flex; align-items: center; gap: var(--space-2); font-weight: var(--body-strong-font-weight); }
+.bk-confirm-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.bk-link { display: inline-flex; align-items: center; gap: var(--space-2); font-weight: var(--body-strong-font-weight); color: var(--primary); }
+.bk-link:hover { text-decoration: underline; text-underline-offset: 3px; }
+.bk-inline-link { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; overflow-wrap: anywhere; }
+
+@media (max-width: 640px) {
+  .bk-head { grid-template-columns: 1fr; }
+  .bk-actions .sg-btn-primary { inline-size: 100%; }
+}

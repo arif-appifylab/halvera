@@ -1,0 +1,56 @@
+/* Student dashboard: a tinted band with the student and the pages as tabs, then the page at full width. */
+
+.dash-band {
+  background: var(--surface-sage);
+  border-block-end: 1px solid var(--line);
+}
+.dash-band-inner {
+  display: grid;
+  gap: var(--space-5);
+  max-inline-size: var(--container);
+  margin-inline: auto;
+  padding: var(--space-6) var(--space-6) 0;
+}
+.dash-band-who {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+.dash-band-who > div { display: grid; gap: var(--space-1); margin-inline-end: auto; }
+.dash-band-who p { margin: 0; }
+
+.dash-tabs {
+  display: flex;
+  gap: var(--space-5);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.dash-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-block: var(--space-3);
+  border-block-end: 3px solid transparent;
+  color: var(--ink-muted);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.dash-tab:hover { color: var(--ink); }
+.dash-tab.is-current { color: var(--primary-ink); border-block-end-color: var(--primary); font-weight: 600; }
+
+.dash-wide {
+  display: grid;
+  gap: var(--space-6);
+  max-inline-size: var(--container);
+  margin-inline: auto;
+  padding: var(--space-7) var(--space-6) var(--space-8);
+}
+
+@media (max-width: 768px) {
+  .dash-band-inner { padding: var(--space-5) var(--space-4) 0; gap: var(--space-4); }
+  .dash-band-who .sg-avatar { inline-size: 48px; block-size: 48px; font-size: 16px; }
+  .dash-wide { padding: var(--space-5) var(--space-4) var(--space-7); }
+}

@@ -1,0 +1,217 @@
+// Blog posts (Website → Blog). Fictional school, fictional posts.
+// access: 'public' | 'members'. Members-only posts are gated by a membership plan in EzyCourse.
+// body blocks: { type: 'p' | 'h2', text } · { type: 'ul', items } · { type: 'quote', text, cite? }
+import { media } from './media-credits.js'
+
+export const postCategories = [
+  { value: 'gut-health', label: 'Gut health' },
+  { value: 'mens-health', label: 'Men’s health' },
+  { value: 'sleep', label: 'Sleep' },
+  { value: 'mindful-eating', label: 'Mindful eating' },
+  { value: 'recipes', label: 'Recipes' },
+]
+
+export const categoryLabel = (value) => postCategories.find((c) => c.value === value)?.label || value
+
+export const posts = [
+  {
+    slug: 'why-your-gut-reacts-to-stress',
+    image: media['post-why-your-gut-reacts-to-stress'].url,
+    title: 'Why your gut reacts when life gets busy',
+    excerpt: 'Bloating before a big meeting is not in your head. Here is what the gut–brain connection means, and three small things that help.',
+    category: 'gut-health',
+    author: 'amara',
+    date: 'Tue 13 Oct 2026',
+    readTime: '7 min read',
+    featured: true,
+    access: 'public',
+    relatedProduct: 'gut-health-reset',
+    body: [
+      { type: 'p', text: 'Many of the clients I see tell me the same thing: their gut is fine on holiday and unsettled the week a project is due. They often feel a little embarrassed about it, as if they should be able to think their way out of it. You can’t, and you don’t need to.' },
+      { type: 'p', text: 'Your gut and your brain are in constant conversation through the vagus nerve, hormones and the bacteria that live in your digestive tract. When you are stressed, your body moves energy away from digestion and towards dealing with the threat in front of you. That made sense when the threat was a predator. It is less helpful when the threat is an inbox.' },
+      { type: 'h2', text: 'What you might notice' },
+      { type: 'ul', items: ['Bloating that builds through the working day', 'Rushing to the loo, or not going for days', 'Losing your appetite at lunch, then feeling ravenous at 9pm', 'Foods you usually tolerate suddenly causing trouble'] },
+      { type: 'p', text: 'None of these mean something is wrong with you. They are signals worth listening to, and they are a good reason to talk to your GP if they are new, severe or getting worse.' },
+      { type: 'h2', text: 'Three small things that help' },
+      { type: 'p', text: 'Before you change what you eat, try changing how you eat. Sit down for meals, even for ten minutes. Take three slow breaths before the first bite. Put your fork down between mouthfuls. These sound almost too simple, but they tell your nervous system it is safe to digest.' },
+      { type: 'quote', text: 'I stopped eating at my desk and the afternoon bloating eased within a fortnight. I didn’t change a single food.', cite: 'Pranav, Gut Health Reset' },
+      { type: 'p', text: 'If you would like a structured way to try this, the first week of our Gut Health Reset is built around exactly these habits. And if your symptoms are complex, a consultation is the best place to start.' },
+    ],
+  },
+  {
+    slug: 'five-gentle-swaps-for-a-calmer-gut',
+    image: media['post-five-gentle-swaps-for-a-calmer-gut'].url,
+    title: 'Five gentle swaps for a calmer gut',
+    excerpt: 'No elimination diets, no long lists of banned foods. Just five swaps our clients find easy to keep.',
+    category: 'gut-health',
+    author: 'amara',
+    date: 'Tue 29 Sep 2026',
+    readTime: '5 min read',
+    access: 'public',
+    relatedProduct: 'calm-gut-bundle',
+    body: [
+      { type: 'p', text: 'When your gut is unsettled, it is tempting to cut out everything at once. In our experience, that tends to make eating stressful, which makes the gut worse. Small swaps, kept for a few weeks, usually do more.' },
+      { type: 'h2', text: 'The swaps' },
+      { type: 'ul', items: ['Cold smoothie for a warm breakfast, such as porridge or eggs', 'Grazing all afternoon for one proper snack with some protein', 'A large raw salad for roasted or lightly cooked vegetables', 'Fizzy drinks with meals for still water or a warm herbal tea after', 'Eating on the go for sitting down, even briefly'] },
+      { type: 'p', text: 'Choose one. Try it for a week, and notice how you feel. If it helps, keep it and add another. If it doesn’t, let it go without guilt.' },
+      { type: 'h2', text: 'Why cooked often feels easier' },
+      { type: 'p', text: 'Raw vegetables are full of goodness, but they ask more of a sensitive gut. Cooking softens the fibre so it is gentler to digest. Many people find they can reintroduce raw foods later, once things have settled.' },
+      { type: 'p', text: 'If you have a diagnosed condition or are on medication, check with your doctor before making changes to your diet.' },
+    ],
+  },
+  {
+    slug: 'midlife-sleep',
+    image: media['post-midlife-sleep'].url,
+    title: 'Midlife sleep for men: what is actually going on',
+    excerpt: 'Waking at 3am, a racing mind, up in the night for the loo. Owen explains what changes for men in midlife, and what our members find helps.',
+    category: 'mens-health',
+    author: 'leah',
+    date: 'Tue 6 Oct 2026',
+    readTime: '9 min read',
+    access: 'members',
+    relatedProduct: 'mens-health-foundations',
+    body: [
+      { type: 'p', text: 'If you are in your forties and sleeping worse than you ever have, you are far from alone. Broken sleep is one of the most common things men bring to me, and one of the least talked about.' },
+      { type: 'p', text: 'Several things shift at once in midlife. Testosterone changes gradually with age, stress at work and at home often peaks, and weight settling around the middle can make snoring more likely. Many men also start waking in the night to use the loo, which breaks sleep into shorter pieces.' },
+      { type: 'h2', text: 'The 3am wake-up' },
+      { type: 'p', text: 'Waking in the small hours is often linked to blood sugar dipping overnight and a small rise in cortisol. A balanced evening meal with protein and slow carbohydrates, eaten a couple of hours before bed, helps many of the men I work with.' },
+      { type: 'h2', text: 'What our members find helps' },
+      { type: 'ul', items: ['A cool, dark bedroom', 'A consistent wake time, even after a poor night', 'Less alcohol in the evening, and nothing to drink in the last hour before bed', 'A short breathing practice when you wake, instead of reaching for your phone', 'Talking to your GP if you snore loudly, wake gasping, or get up to pee more than once most nights'] },
+      { type: 'quote', text: 'Knowing why I was waking made it less frightening. Now I have a plan for those nights.', cite: 'Jonah, Men’s Health Circle' },
+      { type: 'p', text: 'Food and routine can make a real difference, and they work well alongside medical care. They are not a substitute for it. If your sleep has changed suddenly or you feel low for more than a couple of weeks, speak to your doctor.' },
+    ],
+  },
+  {
+    slug: 'prostate-friendly-eating',
+    image: media['post-prostate-friendly-eating'].url,
+    title: 'Prostate-friendly eating, without the rules',
+    excerpt: 'Lists of foods for prostate health are everywhere online. Here is the useful part, minus the strict meal plans.',
+    category: 'mens-health',
+    author: 'leah',
+    date: 'Tue 22 Sep 2026',
+    readTime: '6 min read',
+    access: 'public',
+    relatedProduct: 'mens-health-circle',
+    body: [
+      { type: 'p', text: 'You may have seen lists of foods that claim to protect your prostate. The research behind most single-food claims is thin, and chasing them can feel like one more job. There is a gentler way to use the idea.' },
+      { type: 'h2', text: 'Add, rather than cut' },
+      { type: 'p', text: 'The way of eating most often suggested for prostate health is the same one that looks after your heart, weight and energy: plenty of plants, fibre and healthy fats, and less heavily processed food. Rather than cutting foods out, add a little more of the good things you already enjoy.' },
+      { type: 'ul', items: ['A few colours of vegetables a day, including tomatoes, cooked or raw', 'Oily fish, beans or lentils in place of some red and processed meat', 'Wholegrains and olive oil more often', 'Less alcohol and fewer fizzy drinks in the evening if you are up in the night'] },
+      { type: 'p', text: 'Food is one part of looking after yourself, alongside your GP. If you notice changes when you pee, such as going more often, a weaker flow or blood in your urine, see your doctor rather than trying to manage it with food alone.' },
+    ],
+  },
+  {
+    slug: 'a-wind-down-routine-you-will-keep',
+    image: media['post-a-wind-down-routine-you-will-keep'].url,
+    title: 'A wind-down routine you will actually keep',
+    excerpt: 'Most evening routines fail because they are too long. Samir shares a twenty-minute version that fits a real life.',
+    category: 'sleep',
+    author: 'samir',
+    date: 'Tue 15 Sep 2026',
+    readTime: '5 min read',
+    access: 'public',
+    relatedProduct: 'better-sleep-21-days',
+    body: [
+      { type: 'p', text: 'I often meet people with an evening routine that includes a bath, an hour of reading, journalling, stretching and a herbal tea. It sounds lovely. It also takes two hours, so it rarely happens.' },
+      { type: 'p', text: 'Your body responds to repetition more than to perfection. A short routine you do most nights will help more than a long one you manage once a week.' },
+      { type: 'h2', text: 'The twenty-minute version' },
+      { type: 'ul', items: ['Dim the lights and put your phone on charge outside the bedroom', 'Five minutes tidying tomorrow: bag packed, clothes out', 'Ten minutes of something slow: a book, gentle stretches or a guided audio', 'Five minutes of slow breathing in bed, longer out-breath than in-breath'] },
+      { type: 'p', text: 'Start it at roughly the same time each night. After a week or two, the first step alone will begin to make you feel sleepy.' },
+      { type: 'quote', text: 'The changes were small, which is why they stuck.', cite: 'Hiro, Better Sleep in 21 Days' },
+    ],
+  },
+  {
+    slug: 'breathing-for-sleep',
+    image: media['post-breathing-for-sleep'].url,
+    title: 'Breathing for sleep: a four-minute practice',
+    excerpt: 'The practice Samir teaches in every sleep session, written out step by step, with the audio version for members.',
+    category: 'sleep',
+    author: 'samir',
+    date: 'Tue 8 Sep 2026',
+    readTime: '4 min read',
+    access: 'members',
+    relatedProduct: 'rest-and-restore-audio',
+    body: [
+      { type: 'p', text: 'This is the practice I come back to more than any other. It takes about four minutes, needs no equipment and you can do it lying in bed with the lights off.' },
+      { type: 'p', text: 'A longer out-breath gently signals to your nervous system that it is safe to rest. You are not trying to force sleep, only to make it easier for sleep to arrive.' },
+      { type: 'h2', text: 'Step by step' },
+      { type: 'ul', items: ['Lie on your back with one hand on your belly', 'Breathe in through your nose for a count of four', 'Pause for a moment, without straining', 'Breathe out slowly through your mouth for a count of six', 'Repeat for ten rounds, then let your breath return to normal'] },
+      { type: 'p', text: 'If counting keeps you alert, drop it after a few rounds and simply make each out-breath a little longer than the one before.' },
+      { type: 'h2', text: 'When it doesn’t work' },
+      { type: 'p', text: 'Some nights it won’t, and that’s fine. If you are still awake after twenty minutes, get up, sit somewhere dim and quiet, and go back to bed when you feel sleepy. If poor sleep has lasted more than a few weeks, talk to your GP.' },
+      { type: 'quote', text: 'The breathwork audio is the first thing I reach for after a long day.', cite: 'Tom, Rest and Restore Audio' },
+    ],
+  },
+  {
+    slug: 'how-to-notice-when-you-are-full',
+    image: media['post-how-to-notice-when-you-are-full'].url,
+    title: 'How to notice when you are full',
+    excerpt: 'If you often finish a meal and feel uncomfortable, this simple hunger scale can help you find your own enough.',
+    category: 'mindful-eating',
+    author: 'leah',
+    date: 'Tue 1 Sep 2026',
+    readTime: '6 min read',
+    access: 'public',
+    relatedProduct: 'mindful-eating-basics',
+    body: [
+      { type: 'p', text: 'Fullness is a quiet signal, and it takes about twenty minutes to reach your brain. If you eat quickly or while distracted, it often arrives after you have already had more than you needed.' },
+      { type: 'h2', text: 'Try a hunger scale' },
+      { type: 'p', text: 'Imagine a scale from 1, painfully hungry, to 10, uncomfortably full. Before you eat, ask yourself where you are. Halfway through, pause and ask again.' },
+      { type: 'ul', items: ['1 to 3: time to eat, ideally before you reach 1', '4 to 6: comfortable, the best range to stop in', '7 to 10: past full, a cue to slow down next time'] },
+      { type: 'p', text: 'This is not about rules or willpower. Some days you will eat past full, and that is part of being human. The aim is simply to get to know your own signals again.' },
+      { type: 'p', text: 'If eating feels anxious or out of control, our team can help, and your GP can refer you to specialist support.' },
+    ],
+  },
+  {
+    slug: 'warm-oat-and-stewed-apple-bowl',
+    image: media['post-warm-oat-and-stewed-apple-bowl'].url,
+    title: 'Warm oat and stewed apple bowl',
+    excerpt: 'A gentle autumn breakfast that is kind to a sensitive gut and ready in fifteen minutes.',
+    category: 'recipes',
+    author: 'amara',
+    date: 'Tue 25 Aug 2026',
+    readTime: '3 min read',
+    access: 'public',
+    relatedProduct: 'halvera-library',
+    body: [
+      { type: 'p', text: 'This is the breakfast I suggest most often when clients want something warm and simple. Stewing the apple softens it, and the oats keep you full until lunch.' },
+      { type: 'h2', text: 'Serves two' },
+      { type: 'ul', items: ['80g rolled oats', '400ml milk of your choice, or half milk and half water', '1 apple, peeled and diced', 'A pinch of cinnamon', '1 tablespoon nut butter or a spoon of Greek yoghurt', 'A small handful of chopped walnuts'] },
+      { type: 'h2', text: 'Method' },
+      { type: 'p', text: 'Simmer the apple with a splash of water and the cinnamon for about eight minutes, until soft. Meanwhile, cook the oats in the milk over a low heat, stirring often. Spoon the oats into bowls, top with the apple, nut butter or yoghurt and walnuts.' },
+      { type: 'p', text: 'If oats don’t suit you, the stewed apple is lovely over yoghurt on its own.' },
+    ],
+  },
+  {
+    slug: 'miso-ginger-and-greens-soup',
+    image: media['post-miso-ginger-and-greens-soup'].url,
+    title: 'Miso, ginger and greens soup',
+    excerpt: 'A nourishing bowl for tired evenings. Ten minutes, one pan, and plenty of leftovers for lunch.',
+    category: 'recipes',
+    author: 'amara',
+    date: 'Tue 18 Aug 2026',
+    readTime: '4 min read',
+    access: 'public',
+    relatedProduct: 'gut-health-reset',
+    body: [
+      { type: 'p', text: 'On evenings when cooking feels like too much, this soup is my answer. Ginger is warming, the greens add colour and fibre, and miso brings a deep, savoury flavour.' },
+      { type: 'h2', text: 'Serves two, with leftovers' },
+      { type: 'ul', items: ['1 litre vegetable stock', 'A thumb of fresh ginger, finely grated', '2 spring onions, sliced', '2 handfuls of greens, such as pak choi, spinach or kale', '150g cooked noodles or rice', '2 tablespoons white miso paste', 'Tofu, a soft-boiled egg or leftover chicken, if you like'] },
+      { type: 'h2', text: 'Method' },
+      { type: 'p', text: 'Bring the stock to a gentle simmer with the ginger and spring onions. Add the greens and cook for two minutes. Take the pan off the heat, then stir in the miso, as boiling it dulls the flavour. Divide the noodles between bowls and ladle the soup over.' },
+      { type: 'p', text: 'Miso is quite salty, so if you are watching your salt, start with one tablespoon and taste.' },
+    ],
+  },
+]
+
+export const postHref = (post) => `/blog/${post.slug}`
+
+export const getPost = (slug) => posts.find((p) => p.slug === slug) || null
+
+// Up to `n` other posts: same category first, then the most recent.
+export function relatedPosts(post, n = 3) {
+  const others = posts.filter((p) => p.slug !== post.slug)
+  const same = others.filter((p) => p.category === post.category)
+  const rest = others.filter((p) => p.category !== post.category)
+  return [...same, ...rest].slice(0, n)
+}

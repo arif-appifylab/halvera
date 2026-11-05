@@ -1,0 +1,81 @@
+/* Log in, Sign up, Verify email, Forgot password. Prefix: auth-. Tokens and logical properties only. */
+
+.auth { min-block-size: 70vh; }
+
+.auth-head {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-2);
+  text-align: center;
+  margin-block-end: var(--space-6);
+}
+.auth-mark {
+  display: grid;
+  place-items: center;
+  inline-size: 44px;
+  block-size: 44px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-sage);
+  color: var(--ink);
+}
+.auth-school {
+  font-family: var(--font-display);
+  font-size: var(--body-lg-font-size);
+  line-height: var(--body-lg-line-height);
+  color: var(--ink-muted);
+}
+.auth-head .t-heading-2 { margin-block-start: var(--space-2); }
+.auth-head .t-muted { max-inline-size: 38ch; }
+
+.auth-forgot { justify-self: end; font-weight: var(--body-strong-font-weight); }
+.auth-center { justify-self: center; text-align: center; }
+
+/* "or" divider with hairlines either side. */
+.auth-or {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--ink-muted);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+}
+.auth-or::before, .auth-or::after {
+  content: "";
+  flex: 1;
+  border-block-start: 1px solid var(--line);
+}
+
+
+/* Preview-only hint. */
+.auth-hint {
+  display: flex;
+  gap: var(--space-2);
+  align-items: flex-start;
+  padding-block-start: var(--space-4);
+  border-block-start: 1px dashed var(--line);
+  color: var(--ink-muted);
+}
+.auth-hint .sg-icon { flex: none; margin-block-start: 1px; }
+
+.auth-timer { font-variant-numeric: tabular-nums; font-weight: var(--body-strong-font-weight); }
+
+.auth-below { text-align: center; color: var(--ink-muted); }
+.auth-below a, .auth-card .sg-check-label a { color: var(--primary); font-weight: var(--body-strong-font-weight); }
+
+/* Sign-up "Site access" step (access gate on). */
+.auth-access {
+  display: grid;
+  gap: var(--space-3);
+  min-inline-size: 0;
+  margin: 0;
+  padding: 0;
+  padding-block-start: var(--space-5);
+  border: 0;
+  border-block-start: 1px solid var(--line);
+}
+.auth-access legend { float: inline-start; inline-size: 100%; padding: 0; }
+.auth-access legend + * { clear: both; }
+.auth-access-options { display: grid; gap: var(--space-3); }
+
+/* Verify: the address the code went to, with "Wrong email? Change it". */
+.auth-sent { display: grid; gap: var(--space-2); justify-items: start; }

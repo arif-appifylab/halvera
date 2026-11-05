@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" role="img" aria-labelledby="t d">
+  <title id="t">Sam’s Tuesday</title>
+  <desc id="d">A timeline from 6:00 to midnight: breakfast at 07:00 at the kitchen table, a snack at 10:30 at a meeting, lunch at 13:00 at the desk while answering emails, dinner at 21:15 after a late train home, and bed at 23:00.</desc>
+  <rect width="720" height="260" fill="#ffffff"/>
+  <g font-family="Helvetica, Arial, sans-serif" fill="#1f2a24">
+    <line x1="40" y1="170" x2="680" y2="170" stroke="#1f2a24" stroke-width="3"/>
+    <g font-size="14" text-anchor="middle" fill="#55605a">
+      <text x="40" y="200">06:00</text><text x="147" y="200">09:00</text><text x="253" y="200">12:00</text>
+      <text x="360" y="200">15:00</text><text x="467" y="200">18:00</text><text x="573" y="200">21:00</text><text x="680" y="200">00:00</text>
+    </g>
+    <g stroke="#1f2a24" stroke-width="2">
+      <line x1="40" y1="164" x2="40" y2="176"/><line x1="147" y1="164" x2="147" y2="176"/><line x1="253" y1="164" x2="253" y2="176"/>
+      <line x1="360" y1="164" x2="360" y2="176"/><line x1="467" y1="164" x2="467" y2="176"/><line x1="573" y1="164" x2="573" y2="176"/><line x1="680" y1="164" x2="680" y2="176"/>
+    </g>
+    <!-- events: x = 40 + (hour - 6) * 35.56 -->
+    <g text-anchor="middle">
+      <line x1="76" y1="90" x2="76" y2="170" stroke="#2f5d4a" stroke-width="2"/><circle cx="76" cy="170" r="8" fill="#2f5d4a"/>
+      <text x="76" y="62" font-size="16" font-weight="700">Breakfast</text><text x="76" y="80" font-size="14">07:00</text>
+      <line x1="200" y1="125" x2="200" y2="170" stroke="#2f5d4a" stroke-width="2"/><circle cx="200" cy="170" r="8" fill="#2f5d4a"/>
+      <text x="200" y="97" font-size="16" font-weight="700">Snack</text><text x="200" y="115" font-size="14">10:30</text>
+      <line x1="289" y1="90" x2="289" y2="170" stroke="#2f5d4a" stroke-width="2"/><circle cx="289" cy="170" r="8" fill="#2f5d4a"/>
+      <text x="289" y="62" font-size="16" font-weight="700">Lunch at the desk</text><text x="289" y="80" font-size="14">13:00</text>
+      <line x1="582" y1="125" x2="582" y2="170" stroke="#2f5d4a" stroke-width="2"/><circle cx="582" cy="170" r="8" fill="#2f5d4a"/>
+      <text x="582" y="97" font-size="16" font-weight="700">Dinner</text><text x="582" y="115" font-size="14">21:15</text>
+      <line x1="644" y1="90" x2="644" y2="170" stroke="#9a5b3c" stroke-width="2"/><circle cx="644" cy="170" r="8" fill="#9a5b3c"/>
+      <text x="644" y="62" font-size="16" font-weight="700">Bed</text><text x="644" y="80" font-size="14">23:00</text>
+    </g>
+    <text x="40" y="240" font-size="14" fill="#55605a">Breakfast at the kitchen table · snack at a meeting · lunch while answering emails · dinner after a late train</text>
+  </g>
+</svg>

@@ -1,0 +1,132 @@
+/* Student dashboard pages (Home, My programmes, Achievements, Appointments, Payments, Settings).
+   Rendered inside .dash-main. Tokens only, logical properties only. Prefix: db-. */
+
+/* Page frame and head. */
+.db-page { display: grid; gap: var(--space-6); min-inline-size: 0; }
+.db-head { display: grid; gap: var(--space-1); }
+.db-head-row { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--space-3); }
+
+/* Panel titles inside cards and sections. */
+.db-panel { display: grid; gap: var(--space-4); align-content: start; }
+.db-panel-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-3); }
+.db-panel-title { font-size: var(--heading-4-font-size); line-height: var(--heading-4-line-height); font-weight: var(--heading-4-font-weight); }
+
+/* Stat tiles row. */
+.db-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: var(--space-4); }
+
+/* Main column beside a narrower side column. */
+.db-cols { display: grid; grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr); gap: var(--space-5); align-items: start; }
+.db-side { display: grid; gap: var(--space-5); align-content: start; }
+@media (max-width: 1180px) { .db-cols { grid-template-columns: minmax(0, 1fr); } }
+
+/* Facts with a leading icon (appointment time, host, place). */
+.db-facts { display: grid; gap: var(--space-2); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.db-facts li { display: flex; align-items: center; gap: var(--space-2); }
+.db-facts .sg-icon { color: var(--ink-muted); flex: none; }
+
+.db-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+
+/* Row list: programmes, certificates. Rows are split by hairlines. */
+.db-list { display: grid; }
+.db-list > li + li { border-block-start: 1px solid var(--line); }
+.db-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.5fr) minmax(120px, 1fr) auto;
+  align-items: center;
+  gap: var(--space-3) var(--space-5);
+  padding-block: var(--space-4);
+}
+.db-list > li:first-child .db-row, .db-list > li:first-child.db-row { padding-block-start: 0; }
+.db-list > li:last-child .db-row, .db-list > li:last-child.db-row { padding-block-end: 0; }
+.db-row-main { display: grid; gap: var(--space-1); min-inline-size: 0; }
+.db-row-tags { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.db-row-title { font-family: var(--font-display); font-size: var(--heading-4-font-size); line-height: var(--heading-4-line-height); color: var(--ink); text-decoration: none; }
+a.db-row-title:hover { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+.db-row-meta { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--ink-muted); }
+.db-row-end { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: var(--space-2); }
+.db-row.is-muted .db-row-title { color: var(--ink-muted); }
+@media (max-width: 720px) {
+  .db-row { grid-template-columns: minmax(0, 1fr); }
+  .db-row-end { justify-content: flex-start; }
+}
+
+/* Locked by the access gate: lock and the way back in. */
+.db-lock { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--ink-muted); }
+.db-lock a { color: var(--primary); font-weight: var(--body-strong-font-weight); }
+.db-lock .sg-icon { flex: none; }
+
+/* Next appointment countdown sits on a sunken plate. */
+.db-countdown { padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken); }
+
+/* Achievements: level card, badges, leaderboard. */
+.db-level { display: grid; gap: var(--space-4); }
+.db-level-points { font-family: var(--font-display); font-size: var(--heading-2-font-size); line-height: var(--heading-2-line-height); }
+.db-badges { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 170px), 1fr)); gap: var(--space-4); }
+.db-badge {
+  display: grid;
+  justify-items: start;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+}
+.db-badge-mark { inline-size: 40px; block-size: 40px; display: grid; place-items: center; border-radius: 50%; background: var(--surface-sage); color: var(--primary-ink); }
+.db-badge-name { font-weight: var(--body-strong-font-weight); }
+.db-badge-meta { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--ink-muted); }
+.db-badge.is-locked { background: var(--surface); border-style: dashed; }
+.db-badge.is-locked .db-badge-mark { background: var(--surface-sunken); color: var(--ink-muted); }
+.db-badge.is-locked .db-badge-name { color: var(--ink-muted); }
+
+.db-person { display: inline-flex; align-items: center; gap: var(--space-2); }
+.db-board tr:has(.db-you) td { background: var(--surface-sage); font-weight: var(--body-strong-font-weight); }
+
+/* Loading placeholders. */
+.db-skel { display: grid; gap: var(--space-3); }
+.db-skel-row { display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr) 96px; gap: var(--space-5); align-items: center; padding-block: var(--space-3); }
+@media (max-width: 720px) { .db-skel-row { grid-template-columns: minmax(0, 1fr); } }
+.db-row-wide { grid-column: span 2; }
+@media (max-width: 720px) { .db-row-wide { grid-column: auto; } }
+
+/* Home: what needs the student, and the next few bookings. */
+.db-attention { display: grid; gap: var(--space-3); }
+.db-attention > li {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+.db-attention p { margin: 0; }
+.db-attention-icon { display: grid; place-items: center; inline-size: 36px; block-size: 36px; border-radius: 50%; background: var(--primary-soft); color: var(--primary-ink); }
+@media (max-width: 640px) { .db-attention > li { grid-template-columns: 36px minmax(0, 1fr); } .db-attention > li > .sg-btn { grid-column: 2; justify-self: start; } }
+
+.db-agenda { display: grid; gap: var(--space-3); }
+.db-agenda > li { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); }
+.db-agenda p { margin: 0; }
+.db-agenda-date {
+  display: grid;
+  justify-items: center;
+  padding: var(--space-1);
+  border-radius: var(--radius-md);
+  background: var(--surface-sage);
+  color: var(--primary-ink);
+  font-size: var(--caption-font-size);
+  line-height: 1.2;
+}
+.db-agenda-date strong { font-family: var(--font-display); font-size: var(--heading-4-font-size); line-height: 1.2; font-weight: 500; }
+.db-memberships { display: grid; gap: var(--space-3); }
+.db-memberships li { display: grid; gap: 2px; }
+.db-memberships a { color: var(--ink); text-decoration: none; }
+.db-memberships a:hover { color: var(--primary); text-decoration: underline; }
+
+/* Home's two columns end level: each column's last card grows to fill, and its button sits at the bottom. */
+.db-cols-even { align-items: stretch; }
+.db-cols-even > .db-side { display: flex; flex-direction: column; }
+.db-cols-even > .db-side > :last-child { flex: 1; display: flex; flex-direction: column; gap: var(--space-4); }
+.db-push { margin-block-start: auto; }
+.db-notes { display: grid; gap: var(--space-3); }
+.db-notes > li { display: grid; gap: 2px; padding-inline-start: var(--space-3); border-inline-start: 3px solid var(--surface-sage); }
+.db-notes p { margin: 0; }

@@ -1,0 +1,9 @@
+/* Contact us. Prefix: ctc-. Tokens and logical properties only. */
+
+.sg-section.ctc-body { padding-block-start: var(--space-2); }
+
+.ctc-details { display: grid; gap: var(--space-4); }
+.ctc-details li { display: flex; gap: var(--space-3); align-items: flex-start; }
+.ctc-details .sg-icon { flex: none; color: var(--primary); margin-block-start: 2px; }
+.ctc-details a { color: var(--primary); font-weight: var(--body-strong-font-weight); overflow-wrap: anywhere; }
+.ctc-details a:hover { color: var(--primary-hover); }

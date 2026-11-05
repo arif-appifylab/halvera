@@ -1,0 +1,122 @@
+/* Cohort and bundle course parts (src/components/course/*). Prefix cr-. Tokens only, logical properties only. */
+
+/* Cohort banner in the player */
+.cr-banner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-sage);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+}
+.cr-banner-main { display: grid; gap: var(--space-1); min-inline-size: 0; flex: 1 1 320px; }
+.cr-banner-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.cr-banner-next {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-block-start: var(--space-1);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+}
+.cr-banner-next > .sg-icon { flex-shrink: 0; margin-block-start: 2px; color: var(--primary); }
+.cr-banner-next a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.cr-banner-next a:hover { color: var(--primary-hover); }
+.cr-banner-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+
+/* Live session lesson */
+.cr-live { display: grid; gap: var(--space-4); }
+.cr-live-caption { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.cr-live-note { display: flex; align-items: flex-start; gap: var(--space-2); }
+.cr-live-note .sg-icon { flex-shrink: 0; margin-block-start: 2px; }
+
+/* Lock screens */
+.cr-gate-progress { inline-size: min(100%, 360px); text-align: start; }
+
+/* Bundle home */
+.cr-bundle { display: grid; gap: var(--space-7); }
+.cr-bundle-summary { display: grid; gap: var(--space-4); }
+.cr-cert {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3) var(--space-4);
+  padding: var(--space-4);
+  background: var(--success-soft);
+  border-radius: var(--radius-md);
+}
+.cr-cert > .sg-icon { flex-shrink: 0; color: var(--success); }
+.cr-cert-text { display: grid; gap: var(--space-1); flex: 1 1 240px; min-inline-size: 0; }
+.cr-cert-hint { display: flex; align-items: flex-start; gap: var(--space-2); color: var(--ink-muted); }
+.cr-cert-hint .sg-icon { flex-shrink: 0; margin-block-start: 2px; color: var(--accent); }
+
+.cr-courses { display: grid; gap: var(--space-4); padding: 0; margin: 0; list-style: none; }
+.cr-course {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: start;
+}
+.cr-course-media {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+}
+.cr-course-media img { inline-size: 100%; block-size: 100%; object-fit: cover; }
+.cr-course.is-locked .cr-course-media img { filter: grayscale(0.7); opacity: 0.7; }
+.cr-course-body { display: grid; gap: var(--space-3); min-inline-size: 0; }
+.cr-course-body h3 a { color: var(--ink); text-decoration: none; }
+.cr-course-body h3 a:hover { color: var(--primary-hover); text-decoration: underline; }
+.cr-course-lock { display: flex; align-items: center; gap: var(--space-2); color: var(--ink-muted); }
+
+/* Sales page: cohorts */
+.cr-mine {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--success-soft);
+  border-radius: var(--radius-md);
+}
+.cr-mine .sg-icon { flex-shrink: 0; margin-block-start: 3px; color: var(--success); }
+.cr-runs { display: grid; gap: 0; padding: 0; margin: 0; list-style: none; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-raised); }
+.cr-run {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2) var(--space-4);
+  padding: var(--space-4) var(--space-5);
+}
+.cr-run + .cr-run { border-block-start: 1px solid var(--line); }
+.cr-run.is-muted .cr-run-main .t-strong { color: var(--ink-muted); }
+.cr-run-main { display: grid; gap: var(--space-1); }
+.cr-run-end { display: grid; justify-items: end; gap: var(--space-1); text-align: end; }
+
+/* Buy panel note */
+.cr-buy-note {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+}
+.cr-buy-note .sg-icon { flex-shrink: 0; margin-block-start: 2px; color: var(--primary); }
+.cr-buy-note strong { color: var(--ink); }
+
+/* Checkout cohort picker */
+.cr-pick { display: grid; gap: var(--space-3); padding: 0; margin: 0; border: 0; min-inline-size: 0; }
+
+@media (max-width: 640px) {
+  .cr-banner { padding: var(--space-4); }
+  .cr-course { grid-template-columns: minmax(0, 1fr); }
+  .cr-run-end { justify-items: start; text-align: start; }
+}

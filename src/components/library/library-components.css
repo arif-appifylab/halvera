@@ -1,0 +1,89 @@
+/* Asset library building blocks: type art, type tags, folder and file cards, unlock options.
+   Tokens only, logical properties only. Prefix: lib-. */
+
+/* Type art: a tinted tile with the file type's icon, used when a file has no thumbnail. */
+.lib-art { display: grid; place-items: center; inline-size: 100%; block-size: 100%; color: var(--primary); background: var(--surface-sage); }
+.lib-art-sm { inline-size: 40px; block-size: 40px; border-radius: var(--radius-md); flex: none; }
+.lib-art-lg { aspect-ratio: 4 / 3; border-radius: var(--radius-xl); }
+.lib-art-lg .sg-icon { inline-size: 56px; block-size: 56px; }
+.lib-art-pdf { background: var(--accent-soft); color: var(--accent-ink); }
+.lib-art-doc { background: var(--info-soft); color: var(--info); }
+.lib-art-slides { background: var(--warning-soft); color: var(--ink); }
+.lib-art-video { background: var(--primary-soft); color: var(--primary-ink); }
+.lib-art-image { background: var(--surface-sage); color: var(--primary); }
+.lib-art-audio { background: var(--surface-clay); color: var(--accent-ink); }
+.lib-art-link { background: var(--surface-sunken); color: var(--ink-muted); }
+.lib-art-web { background: var(--info-soft); color: var(--info); }
+
+/* Type tag on a file's corner (PDF, PPT, AUD…). */
+.lib-tag {
+  position: absolute; inset-block-start: var(--space-2); inset-inline-start: var(--space-2);
+  padding: 2px var(--space-2); border-radius: var(--radius-sm);
+  background: var(--surface-raised); color: var(--ink); border: 1px solid var(--line);
+  font-size: var(--caption-font-size); line-height: var(--caption-line-height); font-weight: var(--caption-font-weight);
+  letter-spacing: 0.04em;
+}
+
+/* Shared card frame for folders and files. */
+.lib-folder, .lib-file {
+  display: flex; color: var(--ink); text-decoration: none; text-align: start;
+  background: var(--surface-raised); border: 1px solid var(--line); border-radius: var(--radius-lg);
+  font: inherit; cursor: pointer; inline-size: 100%;
+  transition: box-shadow 150ms ease, border-color 150ms ease, transform 150ms ease;
+}
+.lib-folder:hover, .lib-file:hover { box-shadow: var(--shadow-md); border-color: var(--line-strong); }
+.lib-folder:focus-visible, .lib-file:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .lib-folder, .lib-file { transition: none; } }
+
+/* Folder card: icon, name, "3 items", access chip. */
+.lib-folder { align-items: center; gap: var(--space-3); padding: var(--space-4); }
+.lib-folder-icon {
+  display: grid; place-items: center; flex: none; inline-size: 48px; block-size: 48px;
+  border-radius: var(--radius-md); background: var(--surface-sage); color: var(--primary);
+}
+.lib-folder-body { display: grid; gap: 2px; min-inline-size: 0; flex: 1; }
+.lib-folder-name { font-weight: var(--body-strong-font-weight); overflow-wrap: anywhere; }
+.lib-folder-meta { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--ink-muted); }
+.lib-folder-chip { flex: none; }
+.lib-folder.is-row { padding-block: var(--space-3); }
+.lib-folder.is-row .lib-folder-icon { inline-size: 40px; block-size: 40px; }
+
+/* File card (grid): thumbnail or art with tag and lock, then name and meta. */
+.lib-file { flex-direction: column; overflow: hidden; padding: 0; }
+.lib-file-media { position: relative; display: block; aspect-ratio: 4 / 3; background: var(--surface-sunken); overflow: hidden; }
+.lib-file-media img { inline-size: 100%; block-size: 100%; object-fit: cover; display: block; }
+.lib-file.is-locked .lib-file-media img { filter: saturate(0.6); }
+.lib-file-lock {
+  position: absolute; inset-block-start: var(--space-2); inset-inline-end: var(--space-2);
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  padding: 2px var(--space-2); border-radius: var(--radius-pill);
+  background: var(--surface-inverse); color: var(--ink-inverse);
+  font-size: var(--caption-font-size); line-height: var(--caption-line-height); font-weight: var(--caption-font-weight);
+}
+.lib-file-body { display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-4) var(--space-4); min-inline-size: 0; }
+.lib-file-name { font-weight: var(--body-strong-font-weight); overflow-wrap: anywhere; }
+.lib-file-meta { display: flex; flex-wrap: wrap; gap: var(--space-2); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--ink-muted); }
+
+/* File row (list view). */
+.lib-file.is-row { flex-direction: row; align-items: center; gap: var(--space-3); padding: var(--space-3) var(--space-4); }
+.lib-file.is-row .lib-file-media { aspect-ratio: auto; background: none; overflow: visible; flex: none; }
+.lib-file.is-row .lib-file-body { padding: 0; flex: 1; }
+.lib-file-type::after { content: '·'; margin-inline-start: var(--space-2); }
+.lib-file-chip { flex: none; }
+
+/* Unlock options: one block per way in (file, folder, category, membership). */
+.lib-unlock { display: grid; gap: var(--space-4); }
+.lib-unlock-list { display: grid; gap: var(--space-3); }
+.lib-unlock-option { display: grid; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-raised); }
+.lib-unlock-head { display: grid; gap: 2px; }
+.lib-unlock-title { font-size: var(--heading-4-font-size); line-height: var(--heading-4-line-height); font-weight: var(--heading-4-font-weight); }
+.lib-unlock-prices { display: grid; gap: var(--space-2); }
+.lib-unlock-prices > li + li { padding-block-start: var(--space-2); border-block-start: 1px solid var(--line); }
+.lib-unlock-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-3); }
+.lib-unlock-price { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.lib-unlock-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.lib-unlock-incl { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); color: var(--primary); font-weight: var(--body-strong-font-weight); }
+
+/* "Needs Site access · added at checkout". */
+.lib-gate { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.lib-gate a { color: var(--primary); font-weight: var(--body-strong-font-weight); }

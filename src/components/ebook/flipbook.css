@@ -1,0 +1,285 @@
+/* Flipbook (src/components/ebook/Flipbook.jsx). Tokens and logical properties only. Physical words
+   appear only where CSS has no logical form (transform-origin, gradient direction), and are
+   mirrored under .fb-rtl. */
+
+.fb-stage {
+  --fb-to-start: to left;
+  --fb-to-end: to right;
+  --fb-corner-start: to top right;
+  --fb-corner-end: to top left;
+  --fb-spine: color-mix(in oklab, var(--overlay) 40%, transparent);
+  --fb-dark: color-mix(in oklab, var(--overlay) 70%, transparent);
+  position: relative;
+  padding: var(--space-6) var(--space-3);
+  background: var(--surface-sunken);
+  overflow: hidden;
+}
+.fb-stage.fb-rtl {
+  --fb-to-start: to right;
+  --fb-to-end: to left;
+  --fb-corner-start: to top left;
+  --fb-corner-end: to top right;
+}
+
+/* Hidden page used to measure how much text fits. */
+.fb-measure {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+.fb-measure .fb-page { position: relative; inset: auto; }
+
+/* The book */
+.fb-book {
+  --fb-p: 0;
+  --fb-angle: 0deg;
+  position: relative;
+  margin-inline: auto;
+  border-radius: var(--radius-sm);
+  touch-action: pan-y pinch-zoom;
+  -webkit-tap-highlight-color: transparent;
+}
+.fb-book:focus { outline: none; }
+.fb-book:focus-visible { outline: 2px solid var(--focus); outline-offset: var(--space-3); }
+.fb-book[data-zone="grab-next"],
+.fb-book[data-zone="grab-prev"] { cursor: grab; }
+.fb-book[data-zone="next"],
+.fb-book[data-zone="prev"] { cursor: pointer; }
+.fb-book.is-dragging { cursor: grabbing; user-select: none; }
+.fb-book.is-turning { user-select: none; }
+
+.fb-slot {
+  position: absolute;
+  inset-block: 0;
+  inline-size: 50%;
+  box-shadow: var(--shadow-md);
+}
+.fb-slot-start { inset-inline-start: 0; border-start-start-radius: var(--radius-sm); border-end-start-radius: var(--radius-sm); }
+.fb-slot-end { inset-inline-start: 50%; border-start-end-radius: var(--radius-sm); border-end-end-radius: var(--radius-sm); }
+.fb-book.is-single .fb-slot-end { inset-inline-start: 0; inline-size: 100%; border-radius: var(--radius-sm); }
+
+/* Page edges: a stack of thin leaves, thicker on the side with more pages. */
+.fb-slot::before {
+  content: "";
+  position: absolute;
+  inset-block: 2px;
+  inline-size: var(--fb-edge, 0px);
+  background: repeating-linear-gradient(90deg, var(--line) 0 1px, var(--surface-raised) 1px 2px);
+  box-shadow: var(--shadow-sm);
+}
+.fb-slot-start::before { inset-inline-end: 100%; border-start-start-radius: var(--radius-sm); border-end-start-radius: var(--radius-sm); }
+.fb-slot-end::before { inset-inline-start: 100%; border-start-end-radius: var(--radius-sm); border-end-end-radius: var(--radius-sm); }
+
+/* A page */
+.fb-page {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  padding-block: var(--space-6) var(--space-5);
+  padding-inline: clamp(var(--space-5), 8%, var(--space-8));
+  overflow: hidden;
+  border-radius: inherit;
+  background: var(--surface-raised);
+  color: var(--ink);
+  font-family: var(--font-display);
+}
+/* Spine shadow on the inner edge. */
+.fb-page::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inline-size: 14%;
+  pointer-events: none;
+}
+.fb-page.is-end::after { inset-inline-start: 0; background: linear-gradient(var(--fb-to-end), var(--fb-spine), transparent); }
+.fb-page.is-start::after { inset-inline-end: 0; background: linear-gradient(var(--fb-to-start), var(--fb-spine), transparent); }
+.fb-book.is-single .fb-page.is-end::after { inline-size: 5%; }
+
+.fb-run,
+.fb-folio {
+  flex: none;
+  block-size: var(--caption-line-height);
+  font-family: var(--font-sans);
+  font-size: var(--caption-font-size);
+  line-height: var(--caption-line-height);
+  color: var(--ink-muted);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.fb-run { margin-block-end: var(--space-4); }
+.fb-folio { margin-block-start: var(--space-3); font-variant-numeric: tabular-nums; }
+
+.fb-body {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow: hidden;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+/* Justified like print once the measure is wide enough to avoid rivers. */
+.fb-justify .fb-body { text-align: justify; }
+.fb-size-0 .fb-body { font-size: var(--body-font-size); line-height: var(--body-line-height); }
+.fb-size-1 .fb-body { font-size: var(--body-lg-font-size); line-height: var(--body-lg-line-height); }
+.fb-size-2 .fb-body { font-size: var(--quote-font-size); line-height: var(--quote-line-height); }
+.fb-p { margin: 0; }
+.fb-indent { text-indent: 1.5em; }
+.fb-justify .fb-split { text-align-last: justify; }
+
+.fb-opener {
+  padding-block: 14% var(--space-6);
+  text-align: start;
+}
+.fb-opener-num {
+  margin-block-end: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--eyebrow-font-size);
+  line-height: var(--eyebrow-line-height);
+  font-weight: var(--eyebrow-font-weight);
+  letter-spacing: var(--eyebrow-letter-spacing, normal);
+  color: var(--primary);
+}
+.fb-opener-title {
+  font-size: var(--heading-2-font-size);
+  line-height: var(--heading-2-line-height);
+  font-weight: var(--heading-2-font-weight);
+  text-align: start;
+  hyphens: manual;
+}
+.fb-size-0 .fb-opener-title { font-size: var(--heading-3-font-size); line-height: var(--heading-3-line-height); font-weight: var(--heading-3-font-weight); }
+
+/* Cover */
+.fb-cover {
+  justify-content: center;
+  gap: var(--space-5);
+  padding-inline: clamp(var(--space-5), 12%, var(--space-9));
+  background: var(--primary);
+  color: var(--on-primary);
+  text-align: start;
+}
+.fb-cover::after { display: none; }
+.fb-cover-title {
+  font-size: var(--heading-1-font-size);
+  line-height: var(--heading-1-line-height);
+  font-weight: var(--heading-1-font-weight);
+  letter-spacing: var(--heading-1-letter-spacing);
+  text-wrap: balance;
+}
+.fb-cover-rule {
+  display: block;
+  inline-size: var(--space-8);
+  block-size: 2px;
+  background: currentColor;
+  opacity: 0.6;
+}
+.fb-cover-author {
+  font-family: var(--font-sans);
+  font-size: var(--body-font-size);
+  line-height: var(--body-line-height);
+}
+
+/* Folded corner that appears when the pointer is over a grab edge. */
+.fb-corner {
+  position: absolute;
+  inset-block-end: 0;
+  inline-size: var(--space-8);
+  block-size: var(--space-8);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+.fb-slot-end .fb-corner {
+  inset-inline-end: 0;
+  border-end-end-radius: inherit;
+  background: linear-gradient(var(--fb-corner-end), var(--surface-sunken) 0, var(--surface-raised) 44%, var(--fb-spine) 50%, transparent 58%);
+}
+.fb-slot-start .fb-corner {
+  inset-inline-start: 0;
+  border-end-start-radius: inherit;
+  background: linear-gradient(var(--fb-corner-start), var(--surface-sunken) 0, var(--surface-raised) 44%, var(--fb-spine) 50%, transparent 58%);
+}
+.fb-book[data-zone="grab-next"] .fb-slot-end .fb-corner,
+.fb-book.is-spread[data-zone="grab-prev"] .fb-slot-start .fb-corner { opacity: 1; }
+
+/* The turning leaf. p = var(--fb-p) runs 0 → 1 as it turns from the end side to the start side. */
+.fb-leafbox {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  perspective: var(--fb-perspective, 1600px);
+  pointer-events: none;
+}
+.fb-book.is-single .fb-leafbox { overflow: hidden; border-radius: var(--radius-sm); }
+.fb-leaf {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 50%;
+  inline-size: 50%;
+  transform-origin: left center;
+  transform: rotateY(var(--fb-angle));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.fb-rtl .fb-leaf { transform-origin: right center; }
+.fb-book.is-single .fb-leaf { inset-inline-start: 0; inline-size: 100%; }
+.fb-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  box-shadow: var(--shadow-lg);
+}
+.fb-face-front { border-start-end-radius: var(--radius-sm); border-end-end-radius: var(--radius-sm); }
+.fb-face-back { transform: rotateY(180deg); border-start-start-radius: var(--radius-sm); border-end-start-radius: var(--radius-sm); }
+.fb-book.is-single .fb-face { border-radius: var(--radius-sm); }
+
+/* Light and shadow that move with the turn. */
+.fb-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+}
+/* The leaf darkens as it rises off the page and brightens as it lands. */
+.fb-face-front .fb-shade {
+  background: linear-gradient(var(--fb-to-end), var(--fb-dark), transparent 35%, color-mix(in oklab, var(--surface-raised) 50%, transparent) 75%, var(--fb-spine));
+  opacity: calc(var(--fb-p) * 1.4);
+}
+.fb-face-back .fb-shade {
+  background: linear-gradient(var(--fb-to-start), var(--fb-dark), transparent 35%, color-mix(in oklab, var(--surface-raised) 50%, transparent) 75%, var(--fb-spine));
+  opacity: calc((1 - var(--fb-p)) * 1.4);
+}
+/* The page being uncovered sits in the leaf's shadow; the page being covered darkens under it. */
+.fb-slot-end .fb-shade {
+  background: linear-gradient(var(--fb-to-end), var(--fb-dark), transparent 70%);
+  opacity: calc((1 - var(--fb-p)) * 0.9);
+}
+.fb-slot-start .fb-shade {
+  background: linear-gradient(var(--fb-to-start), var(--fb-dark), transparent 70%);
+  opacity: calc(var(--fb-p) * 0.9);
+}
+
+/* Reduced motion: the old view fades out over the new one. */
+.fb-fade {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  animation: fb-fade-out 200ms ease-out forwards;
+}
+@keyframes fb-fade-out { to { opacity: 0; } }
+
+@media (max-width: 640px) {
+  .fb-stage { padding: var(--space-4) var(--space-3); }
+  .fb-cover-title { font-size: var(--heading-2-font-size); line-height: var(--heading-2-line-height); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-corner { transition: none; }
+}

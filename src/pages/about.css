@@ -1,0 +1,29 @@
+/* About us (/about-us). Prefix: about-. Tokens only; logical properties only. */
+
+.about-signature {
+  font-family: var(--font-display);
+  font-style: italic;
+  color: var(--ink-muted);
+}
+
+/* Practitioners: one per row, divided by hairlines, at a comfortable reading width. */
+.about-team { display: grid; max-inline-size: 880px; }
+.about-member { padding-block: var(--space-6); border-block-end: 1px solid var(--line); }
+.about-member:first-child { padding-block-start: 0; }
+.about-member:last-child { padding-block-end: 0; border-block-end: 0; }
+.about-book { display: grid; gap: var(--space-2); margin-block-start: var(--space-5); padding: var(--space-4) var(--space-5); border-radius: var(--radius-md); background: var(--surface-raised); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.about-book ul { display: grid; gap: var(--space-2); }
+.about-book a { color: var(--primary); font-weight: var(--body-strong-font-weight); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Registrations line under the values. */
+.about-creds {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  max-inline-size: 760px;
+  margin-block-start: var(--space-7);
+  padding-block-start: var(--space-5);
+  border-block-start: 1px solid var(--line);
+}
+.about-creds .sg-icon { flex: none; color: var(--primary); margin-block-start: 2px; }
+

@@ -1,0 +1,261 @@
+/* Checkout (/checkout/:id). Prefix co-. Tokens and logical properties only.
+   A Stripe-like hosted checkout: the order on a sage ground (inline start), the payment form on
+   raised (inline end). Each panel's content is a narrow column hugging the centre seam. */
+
+/* ---------- Shell ---------- */
+.co-shell {
+  display: grid; grid-template-columns: minmax(0, 45fr) minmax(0, 55fr);
+  min-block-size: 100vh; min-block-size: 100dvh;
+  background: var(--surface-raised);
+}
+.co-panel { display: flex; flex-direction: column; padding-block: var(--space-8); }
+.co-panel-order {
+  /* Hairlines on sage: a tint of ink, so they read in light and dark. */
+  --co-rule: color-mix(in srgb, var(--ink) 14%, transparent);
+  padding-inline: var(--space-6) var(--space-8);
+  background: var(--surface-sage); color: var(--ink);
+  border-inline-end: 1px solid var(--co-rule);
+}
+.co-panel-pay { padding-inline: var(--space-8) var(--space-6); background: var(--surface-raised); }
+.co-col { flex: 1 0 auto; display: flex; flex-direction: column; inline-size: 100%; max-inline-size: 440px; }
+.co-panel-order .co-col { margin-inline-start: auto; }
+.co-panel-pay .co-col { margin-inline-end: auto; }
+
+/* Desktop: the order stays in view while the form scrolls, as on a hosted checkout. */
+@media (min-width: 900px) {
+  .co-panel-order { align-self: stretch; }
+  .co-panel-order .co-col {
+    position: sticky; inset-block-start: var(--space-8); flex: 0 0 auto;
+    min-block-size: calc(100dvh - 2 * var(--space-8)); max-block-size: calc(100dvh - 2 * var(--space-8));
+    overflow-y: auto;
+  }
+}
+
+/* Unavailable and empty states: centred, with the way back. */
+.co-shell.co-shell-center {
+  grid-template-columns: minmax(0, 1fr); place-items: center;
+  padding: var(--space-8) var(--space-4); background: var(--surface);
+}
+.co-center { display: grid; gap: var(--space-6); inline-size: 100%; max-inline-size: 720px; }
+.co-center .co-back { justify-self: start; }
+.co-center .co-foot { justify-content: center; }
+
+/* ---------- Back link ---------- */
+.co-back {
+  display: inline-flex; align-items: center; gap: var(--space-2); align-self: flex-start;
+  color: var(--ink); text-decoration: none;
+  font-family: var(--font-display); font-size: var(--heading-4-font-size); line-height: var(--heading-4-line-height); font-weight: 500;
+}
+.co-back-arrow { color: var(--ink-muted); }
+.co-back-leaf { color: var(--ink); }
+.co-back:hover .co-back-name { text-decoration: underline; text-underline-offset: 4px; }
+.co-back:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-sm); }
+
+/* ---------- Order panel ---------- */
+.co-order { flex: 1 0 auto; display: flex; flex-direction: column; gap: var(--space-6); }
+.co-hero { display: grid; gap: var(--space-1); padding-block-start: var(--space-5); }
+.co-label {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2);
+  font-family: var(--font-sans); font-size: var(--body-font-size); line-height: var(--body-line-height);
+  font-weight: var(--body-strong-font-weight); color: var(--ink-muted);
+}
+.co-amount {
+  font-family: var(--font-display); font-size: var(--display-lg-font-size); line-height: var(--display-lg-line-height);
+  font-weight: var(--display-lg-font-weight); letter-spacing: var(--display-lg-letter-spacing);
+  color: var(--ink); font-variant-numeric: tabular-nums;
+}
+.co-details { display: grid; gap: var(--space-5); }
+.co-details-toggle { display: none; }
+
+.co-lines { display: grid; gap: var(--space-4); }
+.co-line { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-4); align-items: start; }
+.co-line-main { display: grid; gap: 2px; }
+.co-line-name { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font-weight: var(--body-strong-font-weight); }
+.co-line-amount { font-weight: var(--body-strong-font-weight); text-align: end; font-variant-numeric: tabular-nums; }
+
+/* A line's detail and its "Change" toggle on one row; the price options span the line below. */
+.co-line-sub { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-1) var(--space-3); }
+.co-line-includes { display: flex; align-items: center; gap: var(--space-1); color: var(--ink-muted); }
+.co-line-includes .sg-icon, .co-line-includes svg { flex: none; color: var(--primary); }
+.co-line-qty { margin-block-start: var(--space-2); }
+.co-line-below { grid-column: 1 / -1; }
+.co-change {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  color: var(--primary-ink); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height);
+}
+.co-change:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-sm); }
+.co-change-chev { transition: transform .15s; }
+.co-change[aria-expanded="true"] .co-change-chev { transform: rotate(180deg); }
+.co-switch { display: grid; gap: var(--space-2); }
+.co-switch[hidden] { display: none; }
+.co-switch-options { display: grid; gap: var(--space-2); border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+/* Compact RadioCards on the sage ground. */
+.co-switch-card.sg-radiocard { padding: var(--space-3) var(--space-4); gap: var(--space-2) var(--space-3); }
+.co-switch-card .sg-radiocard-desc { font-size: var(--caption-font-size); line-height: var(--caption-line-height); }
+.co-switch-card .sg-radiocard-meta { font-variant-numeric: tabular-nums; }
+.co-switch-alone a { color: var(--primary-ink); font-weight: var(--body-strong-font-weight); text-underline-offset: 3px; }
+
+/* Promotion code: label, then the field and Apply on one row, then any error under both. */
+.co-promo .sg-coupon-row { grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: var(--space-2); }
+.co-promo .sg-field { display: contents; }
+.co-promo .sg-label { grid-column: 1 / -1; }
+.co-promo .sg-input-wrap { grid-column: 1; grid-row: 2; }
+.co-promo .sg-coupon-row > .sg-btn { grid-column: 2; grid-row: 2; }
+.co-promo .sg-field-msg { grid-column: 1 / -1; margin: 0; }
+
+.co-totals {
+  display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--space-2) var(--space-4);
+  padding-block-start: var(--space-4); border-block-start: 1px solid var(--co-rule);
+  font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height);
+}
+.co-totals dt { color: var(--ink-muted); }
+.co-totals dd { text-align: end; color: var(--ink); font-variant-numeric: tabular-nums; }
+.co-tax-note { color: var(--ink-muted); }
+.co-discount { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.co-totals .co-saving { color: var(--success); font-weight: var(--body-strong-font-weight); }
+.co-totals .co-total {
+  margin-block-start: var(--space-2); padding-block-start: var(--space-3); border-block-start: 1px solid var(--co-rule);
+  color: var(--ink); font-size: var(--body-strong-font-size); line-height: var(--body-strong-line-height); font-weight: 700;
+}
+
+.co-then { display: grid; gap: var(--space-2); padding-block-start: var(--space-4); border-block-start: 1px solid var(--co-rule); }
+.co-then-title { display: flex; align-items: center; gap: var(--space-2); }
+.co-then ul { display: grid; gap: var(--space-1); padding-inline-start: var(--space-6); }
+
+/* ---------- Footer ---------- */
+.co-foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); color: var(--ink-muted); }
+.co-foot-order { margin-block-start: auto; padding-block-start: var(--space-7); }
+.co-foot.co-foot-pay { display: none; }
+.co-foot-secure { display: inline-flex; align-items: center; gap: var(--space-1); }
+.co-foot-links { display: flex; flex-wrap: wrap; gap: var(--space-3); }
+.co-foot-links a { color: var(--ink-muted); text-decoration: none; }
+.co-foot-links a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+/* Theme preview only: "Copy abandoned-checkout link". */
+
+/* ---------- Pay panel ---------- */
+.co-form { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-6); align-content: start; }
+
+/* Express checkout: neutral buttons, text labels only. */
+.co-express { display: grid; gap: var(--space-5); }
+.co-express-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(104px, 1fr)); gap: var(--space-3); }
+.co-express-btn.sg-btn { padding-inline: var(--space-3); border-color: var(--line-strong); background: var(--surface-raised); color: var(--ink); }
+.co-express-btn.sg-btn:hover { background: var(--surface-sunken); color: var(--ink); }
+.co-or { display: flex; align-items: center; gap: var(--space-3); }
+.co-or::before, .co-or::after { content: ""; flex: 1; border-block-start: 1px solid var(--line); }
+
+/* Sections */
+.co-section { display: grid; gap: var(--space-4); }
+.co-section-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--space-2) var(--space-3); }
+.co-section-title { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.co-section-action { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.co-section-intro { margin-block-start: calc(var(--space-2) * -1); }
+.co-section-body { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-4); }
+.co-start { justify-self: start; }
+.co-add { display: inline-flex; align-items: center; gap: var(--space-1); }
+.pg-grid-2.co-pair { gap: var(--space-4); }
+
+/* Contact */
+.co-account {
+  display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3);
+  padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface);
+}
+.co-account-text { flex: 1 1 180px; display: grid; min-inline-size: 0; }
+.co-account-text > span { overflow-wrap: anywhere; }
+.co-account-name { font-weight: var(--body-strong-font-weight); }
+.co-magic { display: grid; gap: var(--space-2); justify-items: start; padding: var(--space-4); border-radius: var(--radius-md); background: var(--surface-sunken); }
+
+/* Site access gate */
+.co-gate { display: grid; gap: var(--space-3); padding: var(--space-4) var(--space-5); border-radius: var(--radius-md); background: var(--surface-sage); }
+.co-access-choice {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2) var(--space-4);
+  padding: var(--space-4); border: 1px solid var(--line); border-radius: var(--radius-md); background: var(--surface);
+}
+.co-access-choice-text { display: grid; gap: 2px; min-inline-size: 0; }
+
+/* Order bump */
+.co-bump {
+  display: grid; gap: var(--space-3); padding: var(--space-5);
+  border: 1.5px dashed var(--accent); border-radius: var(--radius-lg); background: var(--surface-raised);
+}
+.co-bump.is-on { border-style: solid; background: var(--accent-soft); }
+.co-bump-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+
+/* Agreements, authorisation and the one primary button */
+.co-confirm { display: grid; gap: var(--space-5); }
+.co-checks { display: grid; gap: var(--space-4); }
+.co-auth { padding-block-start: var(--space-4); border-block-start: 1px solid var(--line); }
+.co-pay { display: grid; gap: var(--space-3); }
+.co-pay-note { text-align: center; }
+.co-secure { display: flex; align-items: center; justify-content: center; gap: var(--space-1); text-align: center; }
+
+/* ---------- Thank-you ---------- */
+.co-thanks { display: grid; gap: var(--space-6); }
+.co-thanks-head { display: grid; gap: var(--space-2); justify-items: start; }
+.co-thanks-mark {
+  display: grid; place-items: center; inline-size: 48px; block-size: 48px; margin-block-end: var(--space-2);
+  border-radius: 50%; background: var(--success-soft); color: var(--success);
+}
+.co-thanks-mark.is-pending { background: var(--surface-sunken); color: var(--ink-muted); }
+.co-next { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.co-upsell { display: grid; gap: var(--space-3); }
+.co-upsell .sg-eyebrow { color: var(--accent-ink); }
+.co-thanks-actions { display: grid; gap: var(--space-2); }
+
+/* ---------- Small screens: one column, compact order on top ---------- */
+@media (max-width: 899px) {
+  .co-shell { grid-template-columns: minmax(0, 1fr); }
+  .co-panel-order, .co-panel-pay { padding-inline: var(--space-4); }
+  .co-panel-order { padding-block: var(--space-5); border-inline-end: 0; border-block-end: 1px solid var(--co-rule); }
+  .co-panel-pay { padding-block: var(--space-6) var(--space-7); }
+  .co-panel-order .co-col, .co-panel-pay .co-col { flex: 0 0 auto; margin-inline: auto; max-inline-size: 560px; }
+  .co-order { gap: var(--space-4); }
+  .co-hero { padding-block-start: var(--space-2); }
+  .co-amount {
+    font-size: var(--heading-1-font-size); line-height: var(--heading-1-line-height); letter-spacing: var(--heading-1-letter-spacing);
+  }
+  .co-details-toggle {
+    display: inline-flex; align-items: center; gap: var(--space-1); align-self: flex-start;
+    padding: var(--space-1) 0; border: 0; background: none; color: var(--primary-ink); cursor: pointer;
+    font: inherit; font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); font-weight: var(--body-strong-font-weight);
+  }
+  .co-details-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-sm); }
+  .co-details-chev { transition: transform .15s; }
+  .co-order.is-open .co-details-chev { transform: rotate(180deg); }
+  .co-order:not(.is-open) .co-details { display: none; }
+  .co-foot-order { display: none; }
+  .co-foot.co-foot-pay { display: flex; margin-block-start: var(--space-7); justify-content: center; }
+}
+
+@media (max-width: 640px) {
+  .co-amount { font-size: var(--heading-2-font-size); line-height: var(--heading-2-line-height); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .co-details-chev, .co-change-chev { transition: none; }
+}
+
+/* ---------- How you pay: the product's prices at the top of the order panel ---------- */
+.co-pick { margin: 0; padding: 0; border: 0; min-inline-size: 0; display: grid; gap: var(--space-2); }
+.co-pick-legend { padding: 0; margin-block-end: var(--space-2); font-size: var(--label-font-size); line-height: var(--label-line-height); font-weight: var(--label-font-weight); color: var(--ink); }
+.co-pick-grid { display: grid; grid-template-columns: repeat(var(--co-pick-cols, 3), minmax(0, 1fr)); gap: var(--space-2); }
+.co-pick-box {
+  position: relative; display: grid; align-content: start; gap: 2px;
+  padding: var(--space-3); border: 1px solid var(--line-strong); border-radius: var(--radius-md);
+  background: var(--surface-raised); color: var(--ink); cursor: pointer;
+  transition: border-color 150ms ease, background-color 150ms ease;
+}
+.co-pick-box:hover { border-color: var(--primary); }
+.co-pick-box.is-on { border-color: var(--primary); background: var(--primary-soft); box-shadow: inset 0 0 0 1px var(--primary); }
+.co-pick-box:has(.co-pick-input:focus-visible) { outline: 2px solid var(--focus); outline-offset: 2px; }
+.co-pick-input { position: absolute; opacity: 0; inline-size: 1px; block-size: 1px; pointer-events: none; }
+.co-pick-title { font-size: var(--caption-font-size); line-height: var(--caption-line-height); font-weight: var(--label-font-weight); color: var(--ink-muted); }
+.co-pick-box.is-on .co-pick-title { color: var(--primary-ink); }
+.co-pick-price { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); font-weight: var(--body-strong-font-weight); font-variant-numeric: tabular-nums; }
+.co-pick-note { font-size: var(--caption-font-size); line-height: var(--caption-line-height); color: var(--ink-muted); }
+@media (max-width: 480px) { .co-pick-grid { grid-template-columns: repeat(min(2, var(--co-pick-cols, 2)), minmax(0, 1fr)); } }
+@media (prefers-reduced-motion: reduce) { .co-pick-box { transition: none; } }
+
+/* Contact, email first: the email with Continue; then log in, or create the account. */
+.co-email-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: var(--space-3); }
+.co-login-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+@media (max-width: 480px) { .co-email-row { grid-template-columns: minmax(0, 1fr); } }

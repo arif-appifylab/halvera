@@ -1,0 +1,128 @@
+/* Newsletter home and post pages. Tokens only; logical properties only. Prefix: nlp-
+   (the footer's opt-in uses nl-). */
+
+.nlp-ink { color: var(--ink); }
+.nlp-center { text-align: center; }
+.nlp-link { color: var(--primary); text-decoration: underline; text-underline-offset: 3px; }
+.nlp-link:hover { color: var(--primary-hover); }
+.nlp-linkbtn { padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
+.nlp-linkbtn:focus-visible, .nlp-back:focus-visible, .nlp-like:focus-visible, .nlp-pager-link:focus-visible {
+  outline: 2px solid var(--focus); outline-offset: 2px;
+}
+.nlp-sr { position: absolute; inline-size: 1px; block-size: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+/* Head band. */
+.nlp-head-grid { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: var(--space-8); align-items: center; }
+.nlp-head-img {
+  display: block; inline-size: 100%; block-size: auto; aspect-ratio: 4 / 5; object-fit: cover;
+  border-radius: var(--radius-xl); border-end-end-radius: 160px; filter: saturate(0.9);
+}
+@media (max-width: 900px) {
+  .nlp-head-grid { grid-template-columns: minmax(0, 1fr); gap: var(--space-6); }
+  .nlp-head-img { aspect-ratio: 16 / 9; border-end-end-radius: 96px; }
+}
+.nlp-facts { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-5); color: var(--ink-muted); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.nlp-facts li { display: inline-flex; align-items: center; gap: var(--space-2); }
+.nlp-facts .sg-icon { color: var(--primary); }
+.nlp-byline { display: flex; align-items: center; gap: var(--space-3); }
+
+/* Your subscription. */
+.nlp-status {
+  display: grid; gap: var(--space-2); padding: var(--space-5);
+  border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-raised);
+}
+.nlp-status-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+
+/* Tier cards. */
+.nlp-tiers { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: var(--space-5); align-items: stretch; }
+.nlp-tier { display: flex; flex-direction: column; gap: var(--space-3); }
+.nlp-tier.is-featured { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.nlp-tier-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.nlp-perks { gap: var(--space-2); margin-block-end: var(--space-2); }
+.nlp-tier-action { margin-block-start: auto; }
+.nlp-current { display: flex; align-items: center; gap: var(--space-2); color: var(--success); font-size: var(--label-font-size); font-weight: var(--label-font-weight); }
+.nlp-current .sg-icon { flex: none; }
+.nlp-member-line { margin-block-start: var(--space-5); }
+
+/* Forms. */
+.nlp-form { display: grid; gap: var(--space-4); }
+.nlp-form.is-compact { gap: var(--space-3); }
+
+/* Archive. */
+.nlp-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-4); scroll-margin-block-start: calc(var(--header-height) + var(--space-5)); }
+.nlp-search { flex: 0 1 300px; }
+@media (max-width: 768px) { .nlp-search { flex-basis: 100%; } }
+.nlp-list { display: grid; border-block-start: 1px solid var(--line); }
+.nlp-item { position: relative; display: grid; gap: var(--space-2); padding-block: var(--space-5); border-block-end: 1px solid var(--line); }
+.nlp-item:focus-within { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-md); }
+.nlp-item-meta { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.nlp-item-title { max-inline-size: 760px; }
+.nlp-stretch { color: inherit; text-decoration: none; }
+.nlp-stretch:focus-visible { outline: none; }
+.nlp-stretch::after { content: ""; position: absolute; inset: 0; }
+.nlp-item:hover .nlp-stretch { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.nlp-item-badges { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.nlp-lock { display: inline-flex; align-items: center; gap: var(--space-1); color: var(--ink-muted); font-size: var(--caption-font-size); line-height: var(--caption-line-height); font-weight: var(--caption-font-weight); }
+.nlp-pagination { display: flex; justify-content: center; }
+
+/* Theme preview switch. */
+.nlp-preview-wrap { padding-block-end: var(--space-8); }
+.nlp-preview {
+  display: flex; align-items: flex-start; gap: var(--space-3); max-inline-size: 420px; margin-block-start: var(--space-7);
+  padding: var(--space-4); border: 1px dashed var(--line-strong); border-radius: var(--radius-md); color: var(--ink-muted);
+}
+.nlp-preview > .sg-icon { flex: none; margin-block-start: var(--space-1); }
+.nlp-preview > :last-child { flex: 1 1 auto; }
+
+/* Post page: a single reading column. */
+.nlp-post { padding-block: var(--space-7) var(--space-9); }
+.nlp-article { display: grid; gap: var(--space-6); max-inline-size: var(--container-prose); margin-inline: auto; min-inline-size: 0; }
+.nlp-back {
+  display: inline-flex; align-items: center; gap: var(--space-2); justify-self: start;
+  color: var(--primary); text-decoration: none; font-size: var(--label-font-size); font-weight: var(--label-font-weight);
+}
+.nlp-back:hover { color: var(--primary-hover); text-decoration: underline; text-underline-offset: 3px; }
+.nlp-prose.is-preview {
+  mask-image: linear-gradient(to bottom, var(--ink) 50%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, var(--ink) 50%, transparent);
+}
+
+/* The checkout break. */
+.nlp-gate { display: grid; gap: var(--space-5); }
+.nlp-gate-icon { display: inline-grid; place-items: center; inline-size: 44px; block-size: 44px; border-radius: var(--radius-pill); background: var(--surface-raised); color: var(--primary); }
+.nlp-gate-free { display: grid; gap: var(--space-3); padding-block-start: var(--space-5); border-block-start: 1px solid var(--line); }
+.nlp-picker { display: grid; gap: var(--space-3); }
+.nlp-picker-options { display: grid; gap: var(--space-3); border: 0; padding: 0; margin: 0; min-inline-size: 0; }
+.nlp-legend { margin-block-end: var(--space-2); font-size: var(--label-font-size); line-height: var(--label-line-height); font-weight: var(--label-font-weight); }
+.nlp-gate-wrap { min-inline-size: 0; }
+
+/* Like, share. */
+.nlp-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); padding-block: var(--space-4); border-block: 1px solid var(--line); }
+.nlp-like {
+  display: inline-flex; align-items: center; gap: var(--space-2); min-block-size: 36px; padding-inline: var(--space-4);
+  border: 1px solid var(--line); border-radius: var(--radius-pill); background: var(--surface-raised); color: var(--ink);
+  font: inherit; font-size: var(--label-font-size); font-weight: var(--label-font-weight); cursor: pointer;
+  transition: background-color 150ms ease, border-color 150ms ease;
+}
+.nlp-like:hover { background: var(--surface-sunken); }
+.nlp-like.is-on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-ink); }
+.nlp-like.is-static { cursor: default; background: none; border-color: transparent; padding-inline: 0; color: var(--ink-muted); }
+@media (prefers-reduced-motion: reduce) { .nlp-like { transition: none; } }
+
+/* Comments. */
+.nlp-comments { display: grid; gap: var(--space-5); }
+.nlp-comment-list { display: grid; gap: var(--space-5); }
+.nlp-comment { display: flex; gap: var(--space-3); align-items: flex-start; }
+.nlp-comment-body { gap: var(--space-1); min-inline-size: 0; }
+.nlp-comment-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+
+/* Newer / older. */
+.nlp-pager { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
+.nlp-pager-link {
+  display: grid; gap: var(--space-1); align-content: start; padding: var(--space-4);
+  border: 1px solid var(--line); border-radius: var(--radius-lg); color: var(--ink); text-decoration: none;
+}
+.nlp-pager-link:hover { background: var(--surface-sunken); }
+.nlp-pager-link > .t-body-sm { display: inline-flex; align-items: center; gap: var(--space-1); }
+.nlp-pager-link.is-end { text-align: end; justify-items: end; }
+@media (max-width: 560px) { .nlp-pager { grid-template-columns: minmax(0, 1fr); } }

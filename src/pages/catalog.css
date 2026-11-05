@@ -1,0 +1,73 @@
+/* Programmes / All products catalogue. Prefix: cat-. Tokens and logical properties only. */
+
+.cat-body { padding-block: 0 var(--space-9); }
+@media (max-width: 768px) { .cat-body { padding-block-end: var(--space-8); } }
+
+.cat-tabs { overflow-x: auto; scrollbar-width: none; margin-inline: calc(var(--space-1) * -1); padding: var(--space-1); }
+.cat-tabs::-webkit-scrollbar { display: none; }
+
+/* Search and filters: search takes the wide column, then topic, price, sort. */
+.cat-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  gap: var(--space-4);
+  align-items: end;
+}
+@media (max-width: 1024px) {
+  .cat-filters { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cat-search { grid-column: 1 / -1; }
+}
+@media (max-width: 640px) {
+  .cat-filters { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* Results line, active filter chips and Clear filters. */
+.cat-status { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2) var(--space-4); }
+.cat-count {
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  font-weight: var(--body-strong-font-weight);
+  color: var(--ink);
+}
+.cat-chips { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.cat-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-block-size: 32px;
+  padding-inline: var(--space-3) var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface-sage);
+  color: var(--primary-ink);
+  font: inherit;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  cursor: pointer;
+  transition: background-color .15s;
+}
+.cat-chip:hover { background: var(--surface-sunken); }
+.cat-chip:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.cat-status .sg-btn-link {
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+}
+
+.cat-results { scroll-margin-block-start: calc(var(--header-height) + var(--space-5)); }
+
+/* Skeleton card: the same outline as ProductCard while results load. */
+.cat-skel {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  overflow: hidden;
+}
+.cat-skel-media { inline-size: 100%; aspect-ratio: 16 / 10; }
+.cat-skel-body { display: grid; gap: var(--space-3); padding: var(--space-5); }
+.cat-skel-foot { display: flex; justify-content: space-between; align-items: center; padding-block-start: var(--space-2); }
+
+.cat-pages { display: flex; justify-content: center; padding-block-start: var(--space-3); }
+
+.cat-help { display: flex; justify-content: center; }

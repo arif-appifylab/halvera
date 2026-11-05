@@ -1,0 +1,172 @@
+/* Shared page layout and type helpers. Tokens only; logical properties only.
+   Components style themselves; these classes only arrange them. Prefix: pg- and t-. */
+
+/* Type: the tokens.json scale as classes. */
+.t-display-lg, .t-heading-1, .t-heading-2, .t-heading-3, .t-quote, .t-price { font-family: var(--font-display); }
+.t-display-lg { font-size: var(--display-lg-font-size); line-height: var(--display-lg-line-height); font-weight: var(--display-lg-font-weight); letter-spacing: var(--display-lg-letter-spacing); }
+.t-heading-1 { font-size: var(--heading-1-font-size); line-height: var(--heading-1-line-height); font-weight: var(--heading-1-font-weight); letter-spacing: var(--heading-1-letter-spacing); }
+.t-heading-2 { font-size: var(--heading-2-font-size); line-height: var(--heading-2-line-height); font-weight: var(--heading-2-font-weight); }
+.t-heading-3 { font-size: var(--heading-3-font-size); line-height: var(--heading-3-line-height); font-weight: var(--heading-3-font-weight); }
+.t-heading-4 { font-size: var(--heading-4-font-size); line-height: var(--heading-4-line-height); font-weight: var(--heading-4-font-weight); }
+.t-body-lg { font-size: var(--body-lg-font-size); line-height: var(--body-lg-line-height); }
+.t-body-sm { font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.t-caption { font-size: var(--caption-font-size); line-height: var(--caption-line-height); font-weight: var(--caption-font-weight); }
+.t-muted { color: var(--ink-muted); }
+.t-strong { font-weight: var(--body-strong-font-weight); }
+@media (max-width: 640px) {
+  .t-display-lg { font-size: 36px; line-height: 42px; }
+  .t-heading-1 { font-size: 32px; line-height: 38px; }
+  .t-heading-2 { font-size: 28px; line-height: 34px; }
+}
+
+/* Page head: the title band at the top of inner pages. */
+.pg-head { padding-block: var(--space-8) var(--space-6); }
+.pg-head-inner { display: grid; gap: var(--space-3); max-inline-size: 760px; }
+.pg-head.is-center .pg-head-inner { margin-inline: auto; text-align: center; justify-items: center; }
+.pg-head .sg-crumbs { margin-block-end: var(--space-2); }
+
+/* Stacks and rows. */
+.pg-stack { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-5); align-content: start; }
+.pg-stack-sm { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-3); align-content: start; }
+.pg-stack-lg { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-7); align-content: start; }
+.pg-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-3); }
+.pg-row-between { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-3); }
+
+/* Grids. */
+.pg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: var(--space-5); }
+.pg-grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+.pg-grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 220px), 1fr)); gap: var(--space-5); }
+@media (max-width: 768px) { .pg-grid-2 { grid-template-columns: 1fr; } }
+
+/* Main column with a side panel (product page, checkout, blog post). */
+.pg-split { display: grid; grid-template-columns: minmax(0, 1fr) 380px; gap: var(--space-7); align-items: start; }
+.pg-split-aside { position: sticky; inset-block-start: calc(var(--header-height) + var(--space-5)); display: grid; gap: var(--space-5); }
+@media (max-width: 1024px) {
+  .pg-split { grid-template-columns: 1fr; }
+  .pg-split-aside { position: static; }
+}
+
+/* Narrow centred column (sign-in, booking, checkout steps). */
+.pg-narrow { max-inline-size: 520px; margin-inline: auto; }
+
+/* Long-form text: blog posts, legal pages, about story. */
+.pg-prose { display: grid; gap: var(--space-4); font-size: var(--body-lg-font-size); line-height: var(--body-lg-line-height); }
+.pg-prose h2 { font-family: var(--font-display); font-size: var(--heading-2-font-size); line-height: var(--heading-2-line-height); font-weight: var(--heading-2-font-weight); margin-block-start: var(--space-5); }
+.pg-prose h3 { font-size: var(--heading-4-font-size); line-height: var(--heading-4-line-height); font-weight: var(--heading-4-font-weight); margin-block-start: var(--space-3); }
+.pg-prose ul { list-style: disc; padding-inline-start: var(--space-5); display: grid; gap: var(--space-2); }
+.pg-prose ol { list-style: decimal; padding-inline-start: var(--space-5); display: grid; gap: var(--space-2); }
+.pg-prose blockquote { font-family: var(--font-display); font-style: italic; font-size: var(--quote-font-size); line-height: var(--quote-line-height); padding: var(--space-5); border-radius: var(--radius-lg); background: var(--surface-sunken); }
+
+/* Media placeholder: stands in for a school's own photo. */
+.pg-media { display: grid; place-items: center; aspect-ratio: 16 / 9; border-radius: var(--radius-xl); background: var(--surface-sage); color: var(--primary); }
+.pg-media.is-square { aspect-ratio: 1; }
+.pg-media.is-tall { aspect-ratio: 4 / 5; border-end-end-radius: 160px; }
+
+/* Definition list: label / value rows (order details, event facts). */
+.pg-facts { display: grid; grid-template-columns: auto 1fr; gap: var(--space-2) var(--space-5); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.pg-facts dt { color: var(--ink-muted); }
+.pg-facts dd { font-weight: var(--body-strong-font-weight); }
+
+/* Inline icon + text list (what's included, meta lines). */
+.pg-ticks { display: grid; gap: var(--space-3); }
+.pg-ticks li { display: flex; gap: var(--space-3); align-items: flex-start; }
+.pg-ticks .sg-icon { color: var(--primary); margin-block-start: 3px; }
+
+.pg-divider { border: 0; border-block-start: 1px solid var(--line); margin: 0; }
+
+/* Account banners under the header (email not confirmed, site access ended). */
+.site-banner { padding-block-start: var(--space-4); }
+
+/* Site header: the theme adds a theme switch and language picker beside the cart, so the full
+   menu needs more room than the design system allows for. Tighten the gaps on mid-size
+   screens and switch to the menu button below bp-xl (1280px). */
+@media (max-width: 1440px) {
+  .sg-header-inner { gap: var(--space-5); }
+  .sg-header-nav { gap: var(--space-4); }
+}
+@media (max-width: 1279px) {
+  .sg-header-nav, .sg-header-login, .sg-lang { display: none; }
+  .sg-header-burger { display: inline-grid; }
+}
+
+/* Header menu panel (below bp-xl): full width, three columns of links, the booking button on its
+   own row. Two columns on tablets, one on phones. */
+.sg-header-mobile {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0 var(--space-6);
+  padding: var(--space-5) var(--space-6) var(--space-6);
+  box-shadow: var(--shadow-md);
+}
+.sg-header-mobile .sg-navlink {
+  display: flex;
+  align-items: center;
+  min-block-size: 48px;
+  padding-block: var(--space-3);
+  border-block-end: 1px solid var(--line);
+  font-size: var(--body-lg-font-size);
+  line-height: var(--body-lg-line-height);
+}
+.sg-header-mobile .sg-navlink:hover { color: var(--primary); }
+.sg-header-mobile > .sg-btn {
+  grid-column: 1 / -1;
+  justify-self: start;
+  inline-size: auto;
+  margin-block-start: var(--space-5);
+}
+@media (max-width: 900px) { .sg-header-mobile { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .sg-header-mobile { grid-template-columns: minmax(0, 1fr); padding-inline: var(--space-4); }
+  .sg-header-mobile > .sg-btn { justify-self: stretch; inline-size: 100%; }
+}
+
+/* Site header: full width, three zones. Logo at the start edge, the menu centred, account and
+   actions at the end edge. Below bp-xl the menu moves into the menu button, so the logo and the
+   actions sit at the two edges. */
+.sg-header-inner {
+  max-inline-size: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-5);
+  padding-inline: var(--space-6);
+}
+.sg-header-inner > .sg-wordmark { justify-self: start; }
+.sg-header-nav { margin-inline: 0; justify-self: center; }
+.sg-header-actions,
+.sg-header-nav + .sg-header-actions { justify-self: end; margin-inline-start: 0; }
+/* Not enough room to centre the menu on the page: centre it between the logo and the actions. */
+@media (max-width: 1439px) {
+  .sg-header-inner { grid-template-columns: auto minmax(0, 1fr) auto; }
+}
+@media (max-width: 1279px) {
+  .sg-header-inner { grid-template-columns: minmax(0, 1fr) auto; }
+}
+@media (max-width: 768px) {
+  .sg-header-inner { padding-inline: var(--space-4); }
+}
+
+/* Menu panel tools: search, theme and language in one row above the links. */
+.sg-header-mobile-tools {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block-end: var(--space-4);
+  margin-block-end: var(--space-2);
+  border-block-end: 1px solid var(--line);
+}
+.sg-header-mobile .sg-lang-menu { display: inline-flex; }
+.gs-menu-button { gap: var(--space-2); }
+.sg-header-mobile-user { gap: var(--space-3); }
+
+/* The menu panel's tools row: below bp-xl the header has no language picker, so the menu carries it;
+   on phones the header keeps only the logo and the menu button, so search and theme move here too. */
+@media (min-width: 561px) {
+  .sg-header-mobile-tools > :not(.sg-lang-menu) { display: none; }
+}
+
+/* Phones: only the logo and the menu button in the header bar; everything else is in the menu. */
+@media (max-width: 560px) {
+  .sg-header-actions > :not(.sg-header-burger) { display: none; }
+}

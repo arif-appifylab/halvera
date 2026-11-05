@@ -1,0 +1,40 @@
+/* Quantity stepper (− 1 +). Tokens and logical properties only. */
+.qty {
+  display: inline-flex;
+  justify-self: start;
+  align-items: center;
+  gap: var(--space-1);
+  padding: 2px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--ink);
+}
+.qty-btn {
+  display: inline-grid;
+  place-items: center;
+  inline-size: calc(var(--space-6) + var(--space-1));
+  block-size: calc(var(--space-6) + var(--space-1));
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--primary-ink);
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+.qty-btn:hover:not([aria-disabled='true']) { background: var(--primary-soft); }
+.qty-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+.qty-btn[aria-disabled='true'] { color: var(--ink-subtle); cursor: not-allowed; }
+.qty-value {
+  min-inline-size: var(--space-5);
+  text-align: center;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  font-weight: var(--body-strong-font-weight);
+  font-variant-numeric: tabular-nums;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qty-btn { transition: none; }
+}

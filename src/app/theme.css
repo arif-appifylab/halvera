@@ -1,0 +1,13 @@
+/* Theme-level dark-mode touches that sit outside the design system. Tokens only. */
+
+/* The hero placeholder is a light pastel drawing; in dark mode swap in its deep-green twin.
+   Scoped to the placeholder so a school's real photo is never replaced. */
+[data-theme="dark"] .sg-hero-media img[src$="/images/hero-placeholder.svg"] {
+  content: url("/images/hero-placeholder-dark.svg");
+}
+
+/* The placeholder is transparent line art: paint the palette's tinted ground behind it, so it
+   follows the active palette and theme. A school's real photo is unaffected. */
+.sg-hero-media img[src$="/images/hero-placeholder.svg"] {
+  background: var(--surface-sage);
+}

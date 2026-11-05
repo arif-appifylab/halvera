@@ -1,0 +1,71 @@
+/* Media control menus (MediaMenu.jsx): audio track and playback speed. Tokens only, logical properties. */
+
+.mm { position: relative; display: inline-flex; }
+
+.mm-button {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-block-size: calc(var(--space-6) + var(--space-3));
+  padding-block: var(--space-1);
+  padding-inline: var(--space-3);
+  border: 1.5px solid var(--line-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: var(--label-font-size);
+  line-height: var(--label-line-height);
+  font-weight: var(--label-font-weight);
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+.mm-button:hover { border-color: var(--primary); }
+.mm-button:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.mm-button > .sg-icon { flex-shrink: 0; color: var(--ink-muted); }
+.mm-text { white-space: nowrap; }
+.mm-chevron { transition: transform 0.15s ease; }
+.mm.is-open .mm-chevron { transform: rotate(180deg); }
+
+.mm-menu {
+  position: absolute;
+  inset-block-start: calc(100% + var(--space-2));
+  inset-inline-end: 0;
+  z-index: var(--z-dropdown);
+  display: grid;
+  gap: var(--space-1);
+  min-inline-size: calc(var(--space-10) + var(--space-7));
+  margin: 0;
+  padding: var(--space-2);
+  list-style: none;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  color: var(--ink);
+  box-shadow: var(--shadow-lg);
+}
+.mm-menu.is-top { inset-block-start: auto; inset-block-end: calc(100% + var(--space-2)); }
+
+.mm-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-block: var(--space-2);
+  padding-inline: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.mm-item:hover { background: var(--surface-sunken); }
+.mm-item:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.mm-item[aria-checked='true'] { font-weight: var(--body-strong-font-weight); }
+.mm-check { flex-shrink: 0; color: var(--primary); visibility: hidden; }
+.mm-item[aria-checked='true'] .mm-check { visibility: visible; }
+.mm-item-text { display: grid; }
+.mm-hint { color: var(--ink-muted); font-size: var(--caption-font-size); line-height: var(--caption-line-height); font-weight: var(--caption-font-weight); }
+
+@media (prefers-reduced-motion: reduce) {
+  .mm-chevron { transition: none; }
+}

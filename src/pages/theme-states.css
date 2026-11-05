@@ -1,0 +1,7 @@
+.ts-groups { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: var(--space-5); margin-block-start: var(--space-6); }
+.ts-group { display: grid; gap: var(--space-3); align-content: start; padding: var(--space-5); border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--surface-raised); }
+.ts-group ul { display: grid; gap: var(--space-2); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); }
+.ts-gates { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 420px), 1fr)); gap: var(--space-5); margin-block-start: var(--space-6); }
+.ts-gate { display: grid; gap: var(--space-3); align-content: start; margin: 0; }
+.ts-gate figcaption { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); font-size: var(--body-sm-font-size); color: var(--ink-muted); }
+.ts-gate .gate { inline-size: 100%; }

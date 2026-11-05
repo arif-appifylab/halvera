@@ -1,0 +1,50 @@
+/* Design styles for the client to choose from (see /palettes): shape and type only, never colour, so
+   any style works with any palette and both themes. 'soft' is the design system as it is (no
+   data-style). --radius-pill stays as it is, because avatars, dots and progress bars use it to be
+   round; the pill-shaped controls (buttons, tabs, segmented, pages) get --style-control instead. */
+
+/* Clean: sans-serif type throughout (--font-display becomes the sans stack, which also catches the
+   serif used directly by pages), bolder headings, smaller corners, rounded-rectangle buttons. */
+:root[data-style="crisp"] {
+  --font-display: var(--font-sans);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --style-control: 8px;
+  --display-xl-font-weight: 700;
+  --display-lg-font-weight: 700;
+  --heading-1-font-weight: 700;
+  --heading-2-font-weight: 650;
+  --heading-3-font-weight: 650;
+  --display-xl-letter-spacing: -0.03em;
+  --display-lg-letter-spacing: -0.025em;
+  --heading-1-letter-spacing: -0.02em;
+}
+:root[data-style="crisp"] :is(.sg-hero-title, .sg-section-title, .sg-state-reason, .sg-empty-title, .sg-modal-title, .t-display-xl, .t-display-lg, .t-heading-1, .t-heading-2, .t-heading-3) {
+  font-weight: 650;
+  letter-spacing: -0.02em;
+}
+
+/* Editorial: serif headings, square corners, hairline borders, no shadows. The doubled attribute
+   outweighs the palettes' dark-mode shadows. */
+:root[data-style][data-style="editorial"] {
+  --radius-sm: 0px;
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 2px;
+  --style-control: 2px;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --eyebrow-letter-spacing: 0.18em;
+}
+
+:root[data-style] :is(.sg-btn, .sg-iconbtn, .sg-tabs-pill .sg-tab, .sg-segmented, .sg-seg, .sg-page, .sg-plan-flag) {
+  border-radius: var(--style-control);
+}
+
+/* The arched image corner is the Soft style's signature; the others use their normal corner. */
+:root[data-style] :is(.sg-hero-media img, .sg-practitioner-photo, .pg-media.is-tall, .cond-media, .blog-featured-media, .nlp-head-img) {
+  border-end-end-radius: var(--radius-xl);
+}

@@ -1,0 +1,47 @@
+/* The closing call-to-action box (.sg-ctaband-inverse) and the footer in dark mode: four options (see
+   src/app/dark-footer.js). Each re-points the inverse tokens inside those two places only, so the
+   wordmark, links, newsletter form and buttons follow without their own rules. Light mode is untouched. */
+
+/* Shared by every option: light text on a dark surface, and the gold (primary) button instead of the
+   near-white inverse one. 'gold' re-points them again below. */
+:root[data-theme="dark"][data-darkfoot] :is(.sg-footer, .sg-ctaband-inverse) {
+  --ink-inverse: var(--ink);
+  --ink-inverse-muted: var(--ink-muted);
+}
+:root[data-theme="dark"][data-darkfoot] :is(.sg-footer, .sg-ctaband-inverse) .sg-btn-inverse {
+  background: var(--primary);
+  color: var(--on-primary);
+}
+:root[data-theme="dark"][data-darkfoot] :is(.sg-footer, .sg-ctaband-inverse) .sg-btn-inverse:hover {
+  background: var(--primary-hover);
+  color: var(--on-primary);
+}
+:root[data-theme="dark"][data-darkfoot] .sg-footer-legal { border-block-start-color: var(--line); }
+
+/* Deep: the footer is the darkest shade under a hairline; the box is a raised panel. */
+:root[data-theme="dark"][data-darkfoot="deep"] .sg-footer { --surface-inverse: var(--surface-sunken); border-block-start: 1px solid var(--line); }
+:root[data-theme="dark"][data-darkfoot="deep"] .sg-ctaband-inverse { --surface-inverse: var(--surface-raised); }
+:root[data-theme="dark"][data-darkfoot="deep"] .sg-ctaband-inverse .sg-ctaband-inner { border: 1px solid var(--line); }
+
+/* Gold box: the box is the gold with dark text and a dark button; the footer as in Deep. */
+:root[data-theme="dark"][data-darkfoot="gold"] .sg-footer { --surface-inverse: var(--surface-sunken); border-block-start: 1px solid var(--line); }
+:root[data-theme="dark"][data-darkfoot="gold"] .sg-ctaband-inverse {
+  --surface-inverse: var(--primary);
+  --ink-inverse: var(--on-primary);
+  --ink-inverse-muted: color-mix(in srgb, var(--on-primary) 80%, var(--primary));
+}
+:root[data-theme="dark"][data-darkfoot="gold"] .sg-ctaband-inverse .sg-btn-inverse { background: var(--on-primary); color: var(--primary); }
+:root[data-theme="dark"][data-darkfoot="gold"] .sg-ctaband-inverse .sg-btn-inverse:hover { background: var(--surface); color: var(--primary-hover); }
+
+/* Tinted: the box takes the palette's tint; the footer is a raised panel. */
+:root[data-theme="dark"][data-darkfoot="tint"] .sg-footer { --surface-inverse: var(--surface-raised); }
+:root[data-theme="dark"][data-darkfoot="tint"] .sg-ctaband-inverse { --surface-inverse: var(--surface-sage); }
+
+/* Glow: an outlined box with a soft gold glow; the footer is the page colour under a hairline. */
+:root[data-theme="dark"][data-darkfoot="glow"] .sg-footer { --surface-inverse: var(--surface); border-block-start: 1px solid var(--line); }
+:root[data-theme="dark"][data-darkfoot="glow"] .sg-ctaband-inverse .sg-ctaband-inner {
+  background:
+    radial-gradient(90% 140% at 100% 0%, color-mix(in srgb, var(--primary) 22%, transparent), transparent 60%),
+    var(--surface-raised);
+  border: 1px solid color-mix(in srgb, var(--primary) 40%, var(--line));
+}

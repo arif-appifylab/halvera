@@ -1,0 +1,107 @@
+/* Plan picker: choose a membership for a membership-only product. Tokens and logical properties only. */
+
+.pp {
+  display: grid;
+  gap: var(--space-5);
+  inline-size: 100%;
+  text-align: start;
+}
+
+.pp.is-compact { gap: var(--space-4); }
+
+.pp-lead {
+  color: var(--ink-muted);
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+}
+
+.pp-lead strong { color: var(--ink); font-weight: var(--label-font-weight); }
+
+/* The billing toggle stretches to the picker's width and wraps in narrow panels. */
+.pp-toggle .sg-segmented {
+  display: flex;
+  flex-wrap: wrap;
+  inline-size: 100%;
+}
+
+.pp-toggle .sg-seg {
+  flex: 1 1 auto;
+  justify-content: center;
+  padding-inline: var(--space-3);
+}
+
+.pp-options {
+  display: grid;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-inline-size: 0;
+}
+
+.pp-legend {
+  margin-block-end: var(--space-2);
+  padding: 0;
+  font-size: var(--label-font-size);
+  line-height: var(--label-line-height);
+  font-weight: var(--label-font-weight);
+  color: var(--ink);
+}
+
+.pp-features,
+.pp-note { display: block; }
+
+.pp-note { color: var(--accent-ink); }
+
+.pp-current {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  border: 1px dashed var(--line-strong);
+  border-radius: var(--radius-md);
+  background: var(--surface-sunken);
+}
+
+.pp-current-name {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: var(--label-font-weight);
+}
+
+.pp-action {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.pp-small {
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  color: var(--ink-muted);
+}
+
+.pp-action .pp-small { text-align: center; }
+
+.pp-compare {
+  justify-self: center;
+  font-size: var(--body-sm-font-size);
+  line-height: var(--body-sm-line-height);
+  font-weight: var(--label-font-weight);
+  color: var(--primary-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pp-compare:hover { color: var(--primary-hover); }
+
+.pp-compare:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Narrow panels: a little less padding so names and prices sit on one line. */
+.pp.is-compact .sg-radiocard { padding: var(--space-4); }

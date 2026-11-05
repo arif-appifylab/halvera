@@ -1,0 +1,129 @@
+/* Student dashboard → Membership. Prefix: ms-. Tokens only, logical properties only. */
+
+.ms-plan-card { display: grid; gap: var(--space-5); }
+.ms-plan-card h2 { margin: 0; }
+.ms-facts { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 160px), 1fr)); gap: var(--space-4); margin: 0; }
+.ms-facts dt { font-size: var(--caption-font-size); line-height: var(--caption-line-height); color: var(--ink-muted); }
+.ms-facts dd { margin: 0; font-weight: var(--body-strong-font-weight); }
+
+.ms-steps { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.ms-steps > li {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.ms-steps > li.is-done { background: var(--surface-sunken); }
+.ms-steps > li.is-done .t-strong { color: var(--ink-muted); text-decoration: line-through; }
+.ms-step-mark {
+  display: grid;
+  place-items: center;
+  inline-size: 28px;
+  block-size: 28px;
+  border: 2px solid var(--line-strong);
+  border-radius: 50%;
+  color: var(--on-primary);
+}
+.is-done .ms-step-mark { border-color: var(--primary); background: var(--primary); }
+.ms-step-main { display: grid; gap: var(--space-1); min-inline-size: 0; }
+.ms-step-main p { margin: 0; }
+
+.ms-allowances { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+@media (max-width: 860px) { .ms-allowances { grid-template-columns: minmax(0, 1fr); } }
+.ms-allowances p { margin: 0; }
+.ms-included-appts { display: grid; gap: var(--space-1); font-size: var(--body-sm-font-size); }
+
+.ms-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: var(--space-5); }
+.ms-group-label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-2);
+  color: var(--ink-muted);
+  font-size: var(--caption-font-size);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.ms-items { display: grid; gap: var(--space-2); margin: 0; padding: 0; list-style: none; }
+.ms-items li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+
+.ms-plans { display: grid; gap: var(--space-3); }
+.ms-plan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+}
+.ms-plan > div { display: grid; gap: var(--space-1); flex: 1 1 320px; }
+.ms-plan p { margin: 0; }
+.ms-lost { display: grid; gap: var(--space-1); padding-inline-start: var(--space-5); list-style: disc; }
+
+/* Several memberships: one card each, the chosen one outlined. */
+.ms-overview { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); gap: var(--space-4); margin: 0; padding: 0; list-style: none; }
+.ms-pick {
+  display: grid;
+  gap: var(--space-1);
+  inline-size: 100%;
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+  color: var(--ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.ms-pick:hover { border-color: var(--line-strong); }
+.ms-pick:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ms-pick.is-selected { border-color: var(--primary); box-shadow: inset 0 0 0 1px var(--primary); }
+.ms-pick-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--space-2); }
+
+.ms-history { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.ms-history li { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: var(--space-3); }
+@media (max-width: 560px) { .ms-history li { grid-template-columns: minmax(0, 1fr); gap: 0; } }
+
+/* Change plan: the plan facts in the review step. */
+.cp-title { display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--space-2); }
+.cp-facts { display: grid; gap: var(--space-2); margin: 0; }
+.cp-facts > div { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: var(--space-3); }
+.cp-facts dt { color: var(--ink-muted); font-size: var(--body-sm-font-size); }
+.cp-facts dd { margin: 0; }
+
+/* Custom steps: the circle is the checkbox. */
+.ms-step-mark.is-toggle { padding: 0; background: var(--surface-raised); cursor: pointer; }
+.ms-step-mark.is-toggle:hover { border-color: var(--primary); }
+.ms-step-mark.is-toggle:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.is-done .ms-step-mark.is-toggle { background: var(--primary); }
+
+/* Sessions included: one block per appointment, with its next open times. */
+.ms-sessions { display: grid; gap: var(--space-5); margin: 0; padding: 0; list-style: none; }
+.ms-sessions > li { display: grid; gap: var(--space-3); }
+.ms-sessions > li + li { padding-block-start: var(--space-5); border-block-start: 1px solid var(--line); }
+.ms-sessions p { margin: 0; }
+.ms-session-head { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: var(--space-3); }
+.ms-session-left { margin: 0; font-size: var(--body-sm-font-size); color: var(--ink-muted); }
+.ms-session-left strong { color: var(--ink); font-size: var(--body-font-size); }
+.ms-slots { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.ms-slot {
+  display: grid;
+  min-inline-size: 104px;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  color: var(--ink);
+  font-size: var(--caption-font-size);
+  line-height: var(--caption-line-height);
+  text-decoration: none;
+}
+.ms-slot strong { font-size: var(--body-sm-font-size); }
+.ms-slot:hover { border-color: var(--primary); background: var(--primary-soft); color: var(--primary-ink); }
+.ms-slot:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.ms-slot.is-more { align-content: center; color: var(--primary); font-weight: var(--body-strong-font-weight); }

@@ -1,0 +1,14 @@
+/* Dashboard → Tickets. Prefix tk-. Builds on the ap-* account page classes. Tokens and logical
+   properties only. */
+.tk-ticket { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: var(--space-5); align-items: start; }
+.tk-title { color: inherit; text-decoration: none; }
+.tk-title:hover { color: var(--primary); text-decoration: underline; text-underline-offset: 2px; }
+.tk-title:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: var(--radius-sm); }
+.tk-join {
+  display: grid; gap: var(--space-1); padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md); background: var(--success-soft);
+}
+.tk-join-link { font-family: var(--font-mono); font-size: var(--body-sm-font-size); line-height: var(--body-sm-line-height); overflow-wrap: anywhere; inline-size: fit-content; }
+@media (max-width: 720px) {
+  .tk-ticket { grid-template-columns: auto minmax(0, 1fr); }
+}

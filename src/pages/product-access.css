@@ -1,0 +1,83 @@
+/* Product content behind the access gate. Prefix pa-. Tokens only, logical properties only. */
+
+.pa-gated {
+  display: grid;
+  gap: var(--space-6);
+  padding-block: var(--space-6) var(--space-9);
+}
+
+.pa-narrow { max-inline-size: 760px; }
+
+/* Community */
+.pa-community {
+  display: grid;
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  gap: var(--space-7);
+  align-items: start;
+}
+
+.pa-spaces {
+  position: sticky;
+  inset-block-start: calc(var(--header-height) + var(--space-5));
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface-raised);
+}
+.pa-spaces ul { display: grid; gap: var(--space-1); }
+
+.pa-spaces-title {
+  padding-inline: var(--space-3);
+  font-size: var(--label-font-size);
+  line-height: var(--label-line-height);
+  font-weight: var(--label-font-weight);
+  color: var(--ink-muted);
+}
+
+.pa-space {
+  inline-size: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 0;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--ink);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.pa-space:hover { background: var(--surface-sunken); }
+.pa-space.is-current { background: var(--primary-soft); color: var(--primary-ink); font-weight: var(--body-strong-font-weight); }
+
+.pa-post-actions { display: flex; justify-content: flex-end; }
+
+.pa-post { display: grid; gap: var(--space-3); }
+.pa-post-head { display: flex; align-items: center; gap: var(--space-3); }
+.pa-post-who { display: grid; }
+.pa-post-name { gap: var(--space-2); }
+
+/* Media library: src/components/media-library/media-library.css */
+
+/* Files */
+.pa-file { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4); }
+.pa-file-icon {
+  display: grid;
+  place-items: center;
+  inline-size: 48px;
+  block-size: 48px;
+  border-radius: var(--radius-md);
+  background: var(--surface-sage);
+  color: var(--primary);
+}
+.pa-file-text { flex: 1; display: grid; min-inline-size: 12rem; }
+
+/* Newsletter issue titles inside the accordion */
+.pa-issue { display: grid; gap: var(--space-1); text-align: start; }
+
+@media (max-width: 1024px) {
+  .pa-community { grid-template-columns: 1fr; gap: var(--space-5); }
+  .pa-spaces { position: static; }
+  .pa-spaces ul { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+  .pa-space { inline-size: auto; border: 1px solid var(--line); border-radius: var(--radius-pill); }
+}
